@@ -1,6 +1,6 @@
 import { Container, Kicker } from "./primitives";
 import { Reveal } from "@/components/motion-primitives";
-import { ScrollReveal } from "./scroll-reveal";
+import { CrossOut } from "./CrossOut";
 import { DepthCarousel } from "./depth-carousel";
 import { PIPELINE } from "./data";
 
@@ -18,16 +18,22 @@ export function WhatIs() {
           <div className="lg:col-span-8">
             <Reveal>
               <h2 className="text-balance font-display text-[clamp(2rem,4.6vw,3.1rem)] font-extrabold uppercase leading-[1.03] tracking-[-0.03em] text-ink">
-                So… what exactly is GrowthLab?
+                So… what exactly is{" "}
+                <span className="text-orange">GrowthLab</span>?
               </h2>
             </Reveal>
-            <ScrollReveal className="mt-5 max-w-xl text-[15px] leading-relaxed text-ink-2">
-              Not a classroom. Not another online course. GrowthLab is a simulated
-              digital marketing agency where you learn marketing by actually doing
-              the work. From Day&nbsp;1 you&apos;re on a team with a real client —
-              researching, planning, creating, analysing and presenting like a
-              real agency.
-            </ScrollReveal>
+            <Reveal delay={0.08} className="mt-6">
+              <div className="rounded-2xl border-t-[6px] border-orange bg-ink p-7 shadow-[0_28px_64px_-24px_rgba(18,32,58,0.5)] sm:p-9">
+                <p className="max-w-xl font-display text-lg font-bold leading-[1.45] tracking-[-0.01em] text-paper-on-ink sm:text-xl">
+                  Not a <CrossOut>classroom</CrossOut>. Not an <CrossOut>online course</CrossOut>.
+                  GrowthLab is a{" "}
+                  <span className="text-orange-ink">
+                    hands-on learning experience that bridges the gap
+                  </span>{" "}
+                  between marketing knowledge and real-world practice.
+                </p>
+              </div>
+            </Reveal>
           </div>
         </div>
 

@@ -6,7 +6,7 @@ import { WhatIs } from "@/components/site/what-is";
 import { HowItWorks } from "@/components/site/how-it-works";
 import { Curriculum } from "@/components/site/curriculum";
 import { Benefits } from "@/components/site/benefits";
-import { WhoFor } from "@/components/site/who-for";
+import { Faq } from "@/components/site/faq";
 import { Experience } from "@/components/site/experience";
 import { Pricing } from "@/components/site/pricing";
 import { LeadForm } from "@/components/site/lead-form";
@@ -25,7 +25,7 @@ export default function Home() {
         <HowItWorks />
         <Curriculum />
         <Benefits />
-        <WhoFor />
+        <Faq />
         <Experience />
         <Pricing />
         <LeadForm />

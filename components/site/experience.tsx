@@ -1,10 +1,10 @@
 import { Container, Kicker } from "./primitives";
 import { RevealText } from "@/components/motion-primitives";
-import BlurText from "./BlurText";
+import RotatingText from "./RotatingText";
 import { THE_EXPERIENCE } from "./data";
 
-const BEATS = THE_EXPERIENCE.join(" ");
-const BEAT_WORDS = BEATS.split(" ").length;
+// The shared "You'll " lead-in is static; only the verb phrase rotates.
+const BEATS = THE_EXPERIENCE.map((s) => s.replace(/^You['’]ll\s+/, ""));
 
 export function Experience() {
   return (
@@ -22,21 +22,22 @@ export function Experience() {
         </RevealText>
 
         <div className="mt-10 max-w-3xl font-display text-[clamp(1.25rem,3.4vw,2rem)] font-bold leading-[1.35] tracking-[-0.02em]">
-          <BlurText
-            text={BEATS}
-            delay={50}
-            animateBy="words"
-            className="text-paper"
-            rootMargin="-40px 0px"
-          />
-          <BlurText
-            text="Just like a real marketing team."
-            delay={50}
-            startDelay={BEAT_WORDS * 50}
-            animateBy="words"
-            className="text-paper/55"
-            rootMargin="-40px 0px"
-          />
+          <p className="flex flex-wrap items-baseline gap-x-[0.28em] text-paper">
+            <span>You&apos;ll</span>
+            <RotatingText
+              texts={BEATS}
+              rotationInterval={1900}
+              staggerDuration={0.012}
+              staggerFrom="first"
+              mainClassName="text-orange-ink"
+              splitLevelClassName="overflow-hidden pb-[0.15em] -mb-[0.15em]"
+              transition={{ type: "spring", damping: 30, stiffness: 320 }}
+              initial={{ y: "110%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "-110%", opacity: 0 }}
+            />
+          </p>
+          <p className="mt-2 text-paper/55">Just like a real marketing team.</p>
         </div>
       </Container>
     </section>

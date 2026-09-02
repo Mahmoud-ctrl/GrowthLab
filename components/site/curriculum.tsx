@@ -2,11 +2,9 @@
 
 import * as React from "react";
 import { animate, useInView, useReducedMotion } from "motion/react";
-import { CURRICULUM } from "./data";
 import { Container, Kicker } from "./primitives";
-import { Reveal, RevealGroup, RevealItem } from "@/components/motion-primitives";
+import { Reveal } from "@/components/motion-primitives";
 import { ScrollReveal } from "./scroll-reveal";
-import { cn } from "@/lib/utils";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -31,9 +29,9 @@ function CountUp({ to }: { to: number }) {
 }
 
 const STATS = [
-  { n: 16, label: "Trainings" },
-  { n: 8, label: "Deliverables" },
-  { n: 8, label: "Weeks" },
+  { n: 16, label: "Trainings", caption: "Live, hands-on sessions" },
+  { n: 8, label: "Deliverables", caption: "Real client-ready work" },
+  { n: 8, label: "Weeks", caption: "Intensive agency simulation" },
 ];
 
 export function Curriculum() {
@@ -52,57 +50,31 @@ export function Curriculum() {
               </h2>
             </Reveal>
             <ScrollReveal className="mt-5 max-w-lg text-[15px] leading-relaxed text-ink-2">
-              Eight weeks, eight phases of a real engagement — one focus per week,
-              building from business discovery to a finished strategy.
+              Eight weeks inside a working agency — structured training paired
+              with real client deliverables, from discovery to a finished
+              strategy.
             </ScrollReveal>
 
-            <Reveal className="mt-8" delay={0.1}>
-              <dl className="flex flex-wrap items-baseline gap-x-7 gap-y-4">
-                {STATS.map((s, i) => (
+            <Reveal className="mt-10 sm:mt-12" delay={0.1}>
+              <dl className="border-y border-ink/15">
+                {STATS.map((s) => (
                   <div
                     key={s.label}
-                    className={cn(
-                      "flex items-baseline gap-2",
-                      i > 0 && "border-l border-ink/15 pl-7",
-                    )}
+                    className="border-b border-ink/15 py-8 last:border-b-0 sm:py-10"
                   >
-                    <dd className="font-display text-3xl font-black tabular-nums text-orange">
+                    <dd className="font-display text-6xl font-black leading-none tabular-nums text-orange sm:text-7xl">
                       <CountUp to={s.n} />
                     </dd>
-                    <dt className="kicker text-ink-3">{s.label}</dt>
+                    <dt className="mt-3 font-display text-lg font-bold tracking-[-0.01em] text-ink sm:text-xl">
+                      {s.label}
+                    </dt>
+                    <p className="kicker mt-4 text-ink-3">{s.caption}</p>
                   </div>
                 ))}
               </dl>
             </Reveal>
           </div>
         </div>
-
-        <Reveal className="mt-14 sm:mt-16">
-          {/* ledger header */}
-          <div className="hidden grid-cols-12 gap-8 border-b border-ink pb-3 sm:grid">
-            <Kicker className="col-span-1">Wk</Kicker>
-            <Kicker className="col-span-4">Phase</Kicker>
-            <Kicker className="col-span-7">Focus</Kicker>
-          </div>
-
-          <RevealGroup className="border-t border-ink/20 sm:border-t-0">
-            {CURRICULUM.map((week) => (
-              <RevealItem key={week.n}>
-                <div className="grid grid-cols-12 items-baseline gap-x-4 gap-y-1 border-b border-ink/15 py-5 sm:gap-8">
-                  <span className="col-span-2 font-display text-2xl font-black tabular-nums text-orange sm:col-span-1 sm:text-xl">
-                    {String(week.n).padStart(2, "0")}
-                  </span>
-                  <span className="col-span-10 font-display text-lg font-bold tracking-[-0.02em] text-ink sm:col-span-4">
-                    {week.phase}
-                  </span>
-                  <span className="col-span-10 col-start-3 text-[13px] leading-relaxed text-ink-2 sm:col-span-7 sm:col-start-auto">
-                    {week.focus}
-                  </span>
-                </div>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </Reveal>
       </Container>
     </section>
   );

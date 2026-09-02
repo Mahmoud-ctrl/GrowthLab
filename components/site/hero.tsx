@@ -97,7 +97,7 @@ export function Hero() {
                 text="You don't need another marketing course."
                 delay={0.05}
                 stagger={0.028}
-                className="block text-balance text-lg font-medium tracking-tight text-ink/60 sm:text-2xl lg:text-3xl"
+                className="block text-balance text-xl font-medium tracking-tight text-ink sm:text-2xl lg:text-3xl"
               />
 
               <span className="mt-3 block text-4xl font-extrabold uppercase leading-[0.94] tracking-tight sm:text-6xl lg:text-[4.25rem]">
@@ -112,7 +112,7 @@ export function Hero() {
             </h1>
 
             <p
-              className="gl-fade-blur mx-auto mt-7 max-w-xl text-base font-normal leading-relaxed text-ink/70 sm:text-lg lg:mx-0"
+              className="gl-fade-blur mx-auto mt-7 max-w-xl text-lg font-normal leading-relaxed text-ink lg:mx-0"
               style={delayVar(0.55)}
             >
               An 8-week intensive agency simulation where you execute live ad budgets, build real

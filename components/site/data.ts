@@ -313,14 +313,32 @@ export const BENEFITS: Benefit[] = [
   },
 ];
 
-/** §9 — who this is for. */
-export const FOR_YOU = [
-  "You studied marketing but don’t know how to apply it",
-  "You’re a student who wants practical experience",
-  "You want to build confidence before entering the job market",
-  "You want to understand how all areas of marketing connect",
-  "You’re tired of learning theory without doing the work",
-  "You want something more hands-on than a traditional course",
+/** §9 — FAQ. The "who it's for" copy now lives in the final entry. */
+export const FAQ: { q: string; a: string }[] = [
+  {
+    q: "Do I need experience to apply?",
+    a: "No. GrowthLab is built for people who studied marketing — or are simply serious about it — but haven’t done the work yet. You’re trained from the ground up, then apply each skill on a real client project the same week. What matters is that you show up and put in the hours.",
+  },
+  {
+    q: "Is it online or in person?",
+    a: "It’s hybrid. The 16 live training sessions run Mondays and Wednesdays, 6:00–8:00 PM, and your team’s project work continues online through the week.",
+  },
+  {
+    q: "How much time will it take?",
+    a: "Around 4 hours of live training a week — two 2-hour sessions — plus a few hours of team project work on top. Over 8 weeks that’s roughly 32 hours of training alongside the client work you deliver.",
+  },
+  {
+    q: "What if I miss a session?",
+    a: "The occasional miss is fine. But GrowthLab runs like a real agency floor — your team is counting on you each week — so consistent attendance is what makes the experience worth it. If you already know you’ll be out for several weeks, this probably isn’t the right cohort.",
+  },
+  {
+    q: "What do I actually walk away with?",
+    a: "A complete digital marketing strategy and campaign proposal built for a real client, a portfolio piece you can put in front of a hiring manager, a certificate of completion, and hands-on experience across strategy, content, social, paid ads and analytics — plus a real feel for how an agency team operates.",
+  },
+  {
+    q: "Who is it for?",
+    a: "You — if you studied marketing but don’t know how to apply it, you’re a student who wants practical experience, you want to build confidence before entering the job market, or you’re tired of learning theory without doing the work. If you want something more hands-on than a traditional course, you’ll fit right in.",
+  },
 ];
 
 /** §10 — for eight weeks, you're the agency. */
