@@ -4,7 +4,7 @@ import { CtaButton } from "./cta-button";
 import { PROGRAM } from "./data";
 
 const DETAILS: [string, string][] = [
-  ["Cohort", `16 · ${PROGRAM.dates}`],
+  ["Cohort", `14 · ${PROGRAM.dates}`],
   ["Schedule", "Mon & Wed · 6–8 PM"],
   ["Format", PROGRAM.format],
   ["Contact", PROGRAM.contactPhone],
@@ -33,7 +33,7 @@ export function Pricing() {
                   {PROGRAM.price}
                 </span>
               </div>
-              <p className="kicker mt-4 text-ink-3">One-time payment · Lifetime access</p>
+              <p className="kicker mt-4 text-ink-3">One-time payment</p>
 
               {/* Enhanced CTA Area */}
               <div className="mx-auto mt-9 flex max-w-sm flex-col items-center gap-4">
