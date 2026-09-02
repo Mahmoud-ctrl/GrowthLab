@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Container, Kicker } from "./primitives";
-import { PROGRAM } from "./data";
 import { cn } from "@/lib/utils";
 
 type Fields = { name: string; email: string; phone: string; interest: string };
@@ -42,14 +41,6 @@ function validate(f: Fields): Errors {
   if (!f.interest) e.interest = "Let us know which one fits.";
   return e;
 }
-
-const DETAILS: [string, string][] = [
-  ["Cohort", `01 · ${PROGRAM.dates}`],
-  ["Schedule", "Mon & Wed · 6–8 PM"],
-  ["Format", PROGRAM.format],
-  ["Price", `$${PROGRAM.price} one-time`],
-  ["Contact", ` ${PROGRAM.contactPhone}`],
-];
 
 export function LeadForm() {
   const reduce = useReducedMotion();
@@ -107,52 +98,27 @@ export function LeadForm() {
       className="scroll-mt-16 border-t border-ink bg-ink py-24 text-paper sm:py-32"
     >
       <Container>
-        <div className="grid gap-x-8 gap-y-12 lg:grid-cols-12">
-          {/* left — statement + ledger + bonus */}
-          <div className="lg:col-span-5">
+        <div className="mx-auto max-w-2xl">
+          {/* statement */}
+          <div className="text-center">
             <Kicker className="text-paper/45">09 / Reserve your seat</Kicker>
-            <h2 className="mt-5 text-balance font-display text-[clamp(2.25rem,6vw,4rem)] font-black uppercase leading-[0.95] tracking-[-0.035em]">
-              Join the Founding Cohort
-            </h2>
-            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-paper/70">
-              <span className="font-medium text-paper">
-                Your degree taught you marketing. Now it&apos;s time to{" "}
-                <span className="text-orange-ink">practice it</span>.
-              </span>{" "}
-              Leave your details and we&apos;ll come back with next steps for
-              Cohort 01 — seats are limited.
-            </p>
-
-            <dl className="mt-9 max-w-sm">
-              {DETAILS.map(([k, v]) => (
-                <div
-                  key={k}
-                  className="flex items-baseline justify-between gap-4 border-t border-paper/15 py-2.5"
-                >
-                  <dt className="kicker text-paper/45">{k}</dt>
-                  <dd className="text-right text-[13px] font-medium tracking-tight text-paper">
-                    {v}
-                  </dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
-          {/* right — the bonus, headlined, then the form */}
-          <div className="lg:col-span-6 lg:col-start-7">
-            <div className="mb-6">
+          {/* the bonus, headlined, then the form */}
+          <div className="mt-8">
+            <div className="mb-6 text-center">
               <span className="kicker text-orange-ink [font-size:0.62rem]">
                 Free when you register
               </span>
               <h3 className="mt-2 font-display text-[1.6rem] font-black uppercase leading-[1.02] tracking-[-0.025em] text-paper sm:text-[2rem]">
                 Anatomy of a Real Campaign
               </h3>
-              <p className="mt-2.5 max-w-md text-[13px] leading-relaxed text-paper/60">
+              <p className="mx-auto mt-2.5 max-w-md text-[13px] leading-relaxed text-paper/60">
                 One live client engagement, opened end to end — the same shape
                 you&apos;d run inside GrowthLab. Yours with the full program
                 breakdown.
               </p>
-              <ul className="mt-3 flex flex-wrap gap-1.5">
+              <ul className="mt-3 flex flex-wrap justify-center gap-1.5">
                 {TEARDOWN.map((x) => (
                   <li
                     key={x}

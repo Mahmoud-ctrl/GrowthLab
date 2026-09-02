@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { Container, Kicker } from "./primitives";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion-primitives";
-import { BENEFITS, PROGRAM } from "./data";
+import { BENEFITS } from "./data";
 import { cn } from "@/lib/utils";
 
 const ICONS: LucideIcon[] = [
@@ -24,41 +24,27 @@ const ICONS: LucideIcon[] = [
 /** The anchor card — renders the credential itself, not a description of it. */
 function CertificateCard({ caption }: { caption: string }) {
   return (
-    <RevealItem className="group relative flex flex-col overflow-hidden rounded-2xl bg-ink p-7 text-paper-on-ink sm:col-span-2 sm:p-8 lg:col-span-1 lg:row-span-2">
-      <div className="flex items-start justify-between">
-        <span className="font-mono text-[13px] font-medium tabular-nums text-orange-ink">
+    <RevealItem
+      className={cn(
+        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-ink/12 bg-paper p-6 transition duration-300 sm:col-span-2 sm:p-7 lg:col-span-1 lg:row-span-2",
+        "before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:origin-left before:scale-x-0 before:bg-orange before:transition-transform before:duration-300",
+        "hover:-translate-y-0.5 hover:border-ink/20 hover:shadow-[0_18px_44px_-28px_rgba(18,32,58,0.35)] hover:before:scale-x-100",
+      )}
+    >
+      <div className="flex items-center justify-between">
+        <span className="font-mono text-[13px] font-medium tabular-nums text-ink-3">
           01
         </span>
-        <span className="grid size-11 place-items-center rounded-full text-orange-ink ring-1 ring-orange-ink/35">
+        <span className="grid size-10 shrink-0 place-items-center rounded-full bg-orange/10 text-orange ring-1 ring-orange/15 transition-transform duration-300 group-hover:scale-105">
           <Award className="size-[18px]" strokeWidth={2} aria-hidden />
         </span>
       </div>
 
-      {/* the credential, framed like a document on the desk */}
-      <div className="mt-7 flex flex-1 flex-col rounded-[3px] border border-paper-on-ink/15 p-5">
-        <span className="kicker text-[0.62rem] text-paper-on-ink-2">
-          Certificate of Completion
-        </span>
-        <p className="mt-3 font-display text-xl font-bold leading-[1.15] tracking-[-0.02em] text-paper-on-ink sm:text-[1.65rem]">
-          {PROGRAM.program}
-        </p>
-        <p className="mt-2.5 text-[13px] leading-relaxed text-paper-on-ink-2">
-          {PROGRAM.name} · {PROGRAM.cohort}
-        </p>
-        <p className="mt-1.5 font-mono text-[10.5px] uppercase leading-[1.5] tracking-[0.12em] text-paper-on-ink-2">
-          <span className="block">{PROGRAM.dates}</span>
-          <span className="block">{PROGRAM.liveHours} live training hours</span>
-        </p>
+      <h3 className="mt-6 font-display text-lg font-bold tracking-[-0.02em] text-ink">
+        Certificate of Completion
+      </h3>
 
-        <div className="mt-auto pt-8">
-          <div className="h-px w-28 bg-paper-on-ink/25" />
-          <span className="kicker text-[0.58rem] text-paper-on-ink-2">
-            Program Lead
-          </span>
-        </div>
-      </div>
-
-      <p className="mt-5 text-[13px] leading-relaxed text-paper-on-ink-2">
+      <p className="mt-2 max-w-md text-[14px] leading-relaxed text-ink-2">
         {caption}
       </p>
     </RevealItem>

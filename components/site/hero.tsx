@@ -91,35 +91,59 @@ export function Hero() {
           </div>
 
           {/* Text column */}
-          <div className="text-center lg:text-left">
+          <div className="text-left">
             <h1 className="mt-4 tracking-tight text-ink">
-              <WordReveal
-                text="You don't need another marketing course."
-                delay={0.05}
-                stagger={0.028}
-                className="block text-balance text-xl font-medium tracking-tight text-ink sm:text-2xl lg:text-3xl"
-              />
-
-              <span className="mt-3 block text-4xl font-extrabold uppercase leading-[0.94] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-                <WordReveal text="You need real" delay={0.2} stagger={0.05} />{" "}
+              {/* mobile & tablet — stacked, left-aligned */}
+              <span className="mt-3 block text-[2.75rem] font-extrabold uppercase leading-[0.94] tracking-tight sm:text-[4.25rem] lg:hidden">
+                <WordReveal
+                  text="You don't need another marketing course."
+                  delay={0.2}
+                  stagger={0.05}
+                  className="block"
+                />
+                <WordReveal
+                  text="You need real"
+                  delay={0.5}
+                  stagger={0.05}
+                  className="mt-[0.6em] block"
+                />
                 <WordReveal
                   text="agency experience."
-                  delay={0.38}
+                  delay={0.64}
                   stagger={0.06}
-                  className="font-serif font-normal italic lowercase tracking-normal text-orange underline decoration-orange/30 underline-offset-8"
+                  className="mt-1 block whitespace-nowrap text-[0.72em] font-serif font-normal italic lowercase tracking-normal text-orange underline decoration-orange/30 underline-offset-8"
                 />
+              </span>
+
+              {/* desktop — original layout */}
+              <span className="hidden lg:block">
+                <WordReveal
+                  text="You don't need another marketing course."
+                  delay={0.05}
+                  stagger={0.028}
+                  className="block text-balance text-lg font-medium tracking-tight text-ink sm:text-2xl lg:text-3xl"
+                />
+                <span className="mt-3 block text-4xl font-extrabold uppercase leading-[0.94] tracking-tight sm:text-6xl lg:text-[4.25rem]">
+                  <WordReveal text="You need real" delay={0.2} stagger={0.05} />{" "}
+                  <WordReveal
+                    text="agency experience."
+                    delay={0.38}
+                    stagger={0.06}
+                    className="font-serif font-normal italic lowercase tracking-normal text-orange underline decoration-orange/30 underline-offset-8"
+                  />
+                </span>
               </span>
             </h1>
 
             <p
-              className="gl-fade-blur mx-auto mt-7 max-w-xl text-lg font-normal leading-relaxed text-ink lg:mx-0"
+              className="gl-fade-blur mt-7 max-w-xl text-lg font-normal leading-relaxed text-ink"
               style={delayVar(0.55)}
             >
               An 8-week intensive agency simulation where you execute live ad budgets, build real
               campaigns, and deliver client proof.
             </p>
 
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5 lg:justify-start">
+            <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:gap-5">
               <div className="gl-rise-fade" style={delayVar(0.68)}>
                 <button
                   onClick={() =>

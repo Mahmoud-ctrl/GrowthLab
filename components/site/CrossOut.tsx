@@ -5,9 +5,11 @@ import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 /**
- * Wraps a word and, once it scrolls into view, sweeps a thin horizontal
- * strike-through across it, left to right — the "not this" gesture. Under
- * prefers-reduced-motion the word renders plain, with no overlay.
+ * Wraps a word or short phrase and, once it scrolls into view, sweeps a thin
+ * horizontal strike-through across it, left to right — the "not this" gesture.
+ * The phrase is kept on one line so the overlay tracks a single-line box (a
+ * wrapped phrase would put the bar in the line gap). Under prefers-reduced-
+ * motion the text renders plain, with no overlay.
  */
 export function CrossOut({
   children,
@@ -21,7 +23,7 @@ export function CrossOut({
   const reduce = useReducedMotion();
 
   return (
-    <span className={cn("relative inline-block", className)}>
+    <span className={cn("relative inline-block whitespace-nowrap", className)}>
       {children}
       {!reduce && (
         <motion.span

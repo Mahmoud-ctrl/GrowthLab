@@ -1,42 +1,44 @@
+import { SiInstagram, SiTiktok } from "react-icons/si";
 import { Logo } from "./logo";
-import { Container, Kicker } from "./primitives";
+import { Container } from "./primitives";
 import { PROGRAM } from "./data";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-ink bg-paper py-12">
+    <footer className="border-t border-ink bg-paper py-14">
       <Container>
-        <div className="grid gap-8 border-b border-ink/15 pb-8 sm:grid-cols-12">
-          <div className="sm:col-span-5">
-            <Logo className="h-12 w-auto sm:h-14" />
-            <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-ink-2">
-              {PROGRAM.tagline}. {PROGRAM.program}, run as a simulated agency.
-            </p>
+        <div className="flex flex-col items-center text-center">
+          <Logo className="h-12 w-auto sm:h-14" />
+
+          <p className="mt-4 max-w-sm text-[13px] leading-relaxed text-ink-2">
+            GrowthLab is a hands-on learning experience that bridges the gap
+            between marketing knowledge and real-world practice.
+          </p>
+
+          <div className="mt-6 flex items-center gap-3">
+            <a
+              href={PROGRAM.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GrowthLab on Instagram"
+              className="grid size-11 place-items-center rounded-full border border-ink/15 text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+            >
+              <SiInstagram className="size-[18px]" aria-hidden />
+            </a>
+            <a
+              href={PROGRAM.tiktokUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GrowthLab on TikTok"
+              className="grid size-11 place-items-center rounded-full border border-ink/15 text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+            >
+              <SiTiktok className="size-[18px]" aria-hidden />
+            </a>
           </div>
 
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-3 sm:col-span-7 sm:grid-cols-3">
-            {[
-              ["Cohort", `01 · ${PROGRAM.dates}`],
-              ["Format", PROGRAM.format],
-              ["Price", `$${PROGRAM.price}`],
-              ["Schedule", "Mon & Wed, 6–8 PM"],
-              ["Live hours", `${PROGRAM.liveHours}h · ${PROGRAM.trainings} sessions`],
-              ["Contact", PROGRAM.contactPhone],
-            ].map(([k, v]) => (
-              <div key={k} className="border-t border-ink/15 pt-2">
-                <dt className="kicker text-ink-3">{k}</dt>
-                <dd className="mt-1 text-[13px] font-medium tracking-tight text-ink">
-                  {v}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        <div className="mt-6">
-          <Kicker className="text-ink-3">
+          <p className="kicker mt-8 text-ink-3">
             © {new Date().getFullYear()} {PROGRAM.name}
-          </Kicker>
+          </p>
         </div>
       </Container>
     </footer>
