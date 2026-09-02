@@ -9,12 +9,6 @@ export function SiteFooter() {
       <Container>
         <div className="flex flex-col items-center text-center">
           <Logo className="h-12 w-auto sm:h-14" />
-
-          <p className="mt-4 max-w-sm text-[13px] leading-relaxed text-ink-2">
-            GrowthLab is a hands-on learning experience that bridges the gap
-            between marketing knowledge and real-world practice.
-          </p>
-
           <div className="mt-6 flex items-center gap-3">
             <a
               href={PROGRAM.instagramUrl}

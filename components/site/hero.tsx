@@ -1,13 +1,24 @@
 "use client";
 
-import type { CSSProperties } from "react";
-import { SiGoogleads, SiMeta, SiTiktok } from "react-icons/si";
+import type { ComponentType, CSSProperties, SVGProps } from "react";
+import {
+  SiGoogleads,
+  SiMeta,
+  SiGoogleanalytics,
+  SiGooglesearchconsole,
+} from "react-icons/si";
+import { Mail, Search } from "lucide-react";
 import { Container } from "./primitives";
 
-const TOOLS = [
+type IconCmp = ComponentType<SVGProps<SVGSVGElement>>;
+
+const TOOLS: { name: string; Icon: IconCmp; color: string }[] = [
   { name: "Google Ads", Icon: SiGoogleads, color: "#4285F4" },
   { name: "Meta Ads", Icon: SiMeta, color: "#0467DF" },
-  { name: "TikTok Ads", Icon: SiTiktok, color: "#111111" },
+  { name: "GA4", Icon: SiGoogleanalytics, color: "#E37400" },
+  { name: "Search Console", Icon: SiGooglesearchconsole, color: "#458CF5" },
+  { name: "Email and CRM", Icon: Mail, color: "#E08324" },
+  { name: "Keyword research", Icon: Search, color: "#E08324" },
 ];
 
 const delayVar = (seconds: number) => ({ "--gl-delay": `${seconds}s` } as CSSProperties);
@@ -58,31 +69,20 @@ export function Hero() {
       </div>
 
       <div className="relative z-10">
-        {/* Hero split — copy on one side, the device beside it on large screens */}
         <div className="mx-auto grid max-w-[1240px] grid-cols-1 items-center gap-12 px-5 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
-          {/* Device column — phone on the left, beside the copy; the white studio
-              backdrop is multiplied away against the cream ground painted inside
-              this box */}
           <div
             className="gl-kv-in relative order-last mx-auto w-full max-w-[460px] lg:order-first lg:max-w-none"
             style={delayVar(0.45)}
           >
-            {/* warm spotlight bleeding out behind the device */}
             <div
               aria-hidden
               className="pointer-events-none absolute -inset-6 bg-[radial-gradient(ellipse_50%_45%_at_45%_45%,rgba(224,131,36,0.16),transparent_70%)]"
             />
-            {/* The phone photo is a *background* layer multiplied onto the cream
-                ground via background-blend-mode — this keeps the blend inside one
-                element's paint, unlike mix-blend-mode on an <img>, which Chrome
-                intermittently fails to composite here. The white studio backdrop
-                drops to the page colour; the phone and hand stay. */}
             <div
               role="img"
               aria-label="A hand holding a phone showing a marketing campaign dashboard — total ad spend, conversions, and per-platform performance across Google, Meta, and TikTok Ads"
               className="relative aspect-square bg-paper bg-[url('/hero-phone.webp')] bg-cover bg-left bg-no-repeat [background-blend-mode:multiply] lg:aspect-[10/11]"
             >
-              {/* fade the cropped wrist into the page */}
               <div
                 aria-hidden
                 className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-paper"
@@ -93,7 +93,6 @@ export function Hero() {
           {/* Text column */}
           <div className="text-left">
             <h1 className="mt-4 tracking-tight text-ink">
-              {/* mobile & tablet — stacked, left-aligned */}
               <span className="mt-3 block text-[2.55rem] font-extrabold uppercase leading-[0.94] tracking-tight sm:text-[4.25rem] lg:hidden">
                 <WordReveal
                   text="You don't need another marketing course."
@@ -111,7 +110,7 @@ export function Hero() {
                   text="Agency experience."
                   delay={0.64}
                   stagger={0.06}
-                  className="mt-1 block whitespace-nowrap text-[0.72em] font-serif font-normal italic tracking-normal text-orange underline decoration-orange/30 underline-offset-8"
+                  className="mt-1 block whitespace-nowrap text-[0.72em] font-serif font-normal italic tracking-normal text-orange"
                 />
               </span>
 
