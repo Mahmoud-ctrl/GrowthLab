@@ -7,7 +7,6 @@ import {
   SiGoogleanalytics,
   SiGooglesearchconsole,
 } from "react-icons/si";
-import { Mail, Search } from "lucide-react";
 import { Container } from "./primitives";
 
 type IconCmp = ComponentType<SVGProps<SVGSVGElement>>;
@@ -17,8 +16,6 @@ const TOOLS: { name: string; Icon: IconCmp; color: string }[] = [
   { name: "Meta Ads", Icon: SiMeta, color: "#0467DF" },
   { name: "GA4", Icon: SiGoogleanalytics, color: "#E37400" },
   { name: "Search Console", Icon: SiGooglesearchconsole, color: "#458CF5" },
-  { name: "Email and CRM", Icon: Mail, color: "#E08324" },
-  { name: "Keyword research", Icon: Search, color: "#E08324" },
 ];
 
 const delayVar = (seconds: number) => ({ "--gl-delay": `${seconds}s` } as CSSProperties);
@@ -192,17 +189,27 @@ export function Hero() {
               <span className="mb-3.5 block text-center text-[10px] font-bold uppercase tracking-[0.25em] text-ink/40">
                 Master Execution On
               </span>
-              <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
                 {TOOLS.map(({ name, Icon, color }) => (
-                  <div key={name} className="group flex items-center gap-2.5">
+                  <div
+                    key={name}
+                    className="group flex items-center gap-2 rounded-full border border-ink/10 bg-white/70 px-3 py-1.5 transition-colors hover:border-ink/20"
+                  >
                     <Icon
                       aria-hidden
                       style={{ color }}
-                      className="h-6 w-6 shrink-0 transition-transform duration-300 group-hover:scale-125"
+                      className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:scale-110"
                     />
-                    <span className="text-xs font-semibold text-ink/80">{name}</span>
+                    <span className="text-[11px] font-semibold text-ink/80 sm:text-xs">
+                      {name}
+                    </span>
                   </div>
                 ))}
+                <div className="flex items-center rounded-full border border-ink/10 bg-white/70 px-3 py-1.5">
+                  <span className="text-[11px] font-semibold text-ink/50 sm:text-xs">
+                    And more
+                  </span>
+                </div>
               </div>
             </div>
           </div>
