@@ -94,7 +94,7 @@ export function Hero() {
           <div className="text-left">
             <h1 className="mt-4 tracking-tight text-ink">
               {/* mobile & tablet — stacked, left-aligned */}
-              <span className="mt-3 block text-[2.75rem] font-extrabold uppercase leading-[0.94] tracking-tight sm:text-[4.25rem] lg:hidden">
+              <span className="mt-3 block text-[2.55rem] font-extrabold uppercase leading-[0.94] tracking-tight sm:text-[4.25rem] lg:hidden">
                 <WordReveal
                   text="You don't need another marketing course."
                   delay={0.2}
@@ -108,10 +108,10 @@ export function Hero() {
                   className="mt-[0.6em] block"
                 />
                 <WordReveal
-                  text="agency experience."
+                  text="Agency experience."
                   delay={0.64}
                   stagger={0.06}
-                  className="mt-1 block whitespace-nowrap text-[0.72em] font-serif font-normal italic lowercase tracking-normal text-orange underline decoration-orange/30 underline-offset-8"
+                  className="mt-1 block whitespace-nowrap text-[0.72em] font-serif font-normal italic tracking-normal text-orange underline decoration-orange/30 underline-offset-8"
                 />
               </span>
 

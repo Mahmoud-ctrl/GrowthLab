@@ -4,7 +4,7 @@ import { CtaButton } from "./cta-button";
 import { PROGRAM } from "./data";
 
 const DETAILS: [string, string][] = [
-  ["Cohort", `01 · ${PROGRAM.dates}`],
+  ["Cohort", `16 · ${PROGRAM.dates}`],
   ["Schedule", "Mon & Wed · 6–8 PM"],
   ["Format", PROGRAM.format],
   ["Contact", PROGRAM.contactPhone],
@@ -22,7 +22,7 @@ export function Pricing() {
               <Kicker className="text-red-500">Limited seats</Kicker>
             </div>
 
-            <div className="px-6 py-12 text-center sm:px-8 sm:py-16">
+            <div className="px-6 pb-9 pt-12 text-center sm:px-8 sm:py-16">
               <h2 className="font-display text-[clamp(2.25rem,6vw,3.75rem)] font-black uppercase leading-[0.95] tracking-[-0.035em] text-ink">
                 Join the founding cohort
               </h2>
@@ -41,19 +41,19 @@ export function Pricing() {
                   href="#apply"
                   label="Apply now"
                   size="lg"
-                  className="w-full shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl sm:w-auto"
+                  className="shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl sm:w-auto"
                 />
               </div>
 
               <RevealGroup stagger={0.05}>
-                <dl className="mx-auto mt-12 max-w-md text-left">
+                <dl className="mx-auto mt-8 max-w-md border-t border-ink/15 text-left">
                   {DETAILS.map(([k, v]) => (
                     <RevealItem
                       key={k}
-                      className="flex items-baseline justify-between gap-4 border-b border-ink/15 py-3 text-[14px] first:border-t"
+                      className="flex flex-col gap-0.5 border-b border-ink/15 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
                     >
                       <dt className="kicker text-ink-3">{k}</dt>
-                      <dd className="text-right font-medium tracking-tight text-ink">
+                      <dd className="text-[14px] font-medium tracking-tight text-ink sm:text-right">
                         {v}
                       </dd>
                     </RevealItem>
