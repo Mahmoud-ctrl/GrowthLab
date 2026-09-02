@@ -37,7 +37,7 @@ export function Pricing() {
                   className="mt-7"
                 />
                 <p className="mt-4 text-[12px] text-ink-3">
-                  Questions? {PROGRAM.contactName} · {PROGRAM.contactPhone}
+                  Questions? {PROGRAM.contactPhone}
                 </p>
               </div>
 
