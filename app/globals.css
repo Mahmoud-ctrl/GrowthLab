@@ -1,26 +1,247 @@
 @import "tailwindcss";
 
+/*
+  GrowthLab — "Studio Press" editorial system.
+
+  One idea: a print shop's proof sheet. Warm paper, blue-black ink, a single
+  vermillion, halftone dot texture, hairline rules, near-zero radius. Type does
+  the work — Archivo at poster weight, Inter for reading, JetBrains Mono for the
+  ledger (labels, indices, stats). Inverted ink sections carry the rhythm.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f2eee2;          /* page — warm cream proof stock */
+  --paper-2: #e9e4d4;        /* nested fill / offset block */
+  --ink: #12203a;            /* deep navy — primary text & rules */
+  --ink-2: #2c3c56;          /* secondary text (>= 7:1 on paper) */
+  --ink-3: #5c6a80;          /* tertiary / captions (>= 4.6:1 on paper) */
+  --rule: #12203a;           /* hairline rule (used at low alpha via /12 etc.) */
+
+  --orange: #e08324;         /* amber — accent, ~4.7:1 on paper */
+  --orange-ink: #f2a04a;     /* brighter — for use ON ink only */
+  --on-orange: #f8f4e8;
+
+  /* inverted (ink) sections */
+  --ink-bg: #12203a;
+  --ink-bg-2: #1a2c4a;
+  --paper-on-ink: #f2eee2;
+  --paper-on-ink-2: #b7b5ac;  /* secondary text on ink (>= 4.5:1) */
+  --rule-on-ink: #f2eee2;
+
+  --radius: 3px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+
+  --color-orange: var(--orange);
+  --color-orange-ink: var(--orange-ink);
+  --color-on-orange: var(--on-orange);
+
+  --color-ink-bg: var(--ink-bg);
+  --color-ink-bg-2: var(--ink-bg-2);
+  --color-paper-on-ink: var(--paper-on-ink);
+  --color-paper-on-ink-2: var(--paper-on-ink-2);
+
+  /* aliases so stray old classes still resolve during the redesign */
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+  --color-surface: var(--paper);
+  --color-muted-foreground: var(--ink-3);
+  --color-border: var(--rule);
+  --color-brand: var(--orange);
+  --color-ring: var(--ink);
+
+  --font-display: var(--font-archivo);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jbmono);
+
+  --radius-lg: var(--radius);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+  -webkit-text-size-adjust: 100%;
+  background: var(--paper);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern";
+  /* safety net for decorative absolutely-positioned / transformed elements;
+     `clip` (not `hidden`) so it never becomes a scroll container or breaks
+     position: sticky */
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ---- editorial primitives -------------------------------------------------- */
+
+/* the label voice: mono, uppercase, wide, small */
+.kicker {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* halftone dot field — pure CSS, tints with currentColor */
+.halftone {
+  background-image: radial-gradient(currentColor 1.1px, transparent 1.4px);
+  background-size: 7px 7px;
+}
+.halftone-lg {
+  background-image: radial-gradient(currentColor 1.6px, transparent 2px);
+  background-size: 12px 12px;
+}
+
+/* photos read as press plates, not stock */
+.plate {
+  filter: grayscale(1) contrast(1.06) brightness(0.96);
+  mix-blend-mode: multiply;
+}
+
+/* marquee — compositor-only infinite scroll over a 3x row */
+@keyframes gl-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-33.333%, 0, 0);
+  }
+}
+.gl-marquee {
+  animation: gl-marquee 34s linear infinite;
+  will-change: transform;
+}
+
+/* marquee edge fade */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+
+/* focus ring — square, ink, offset */
+.ring-editorial:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* same, for interactive elements sitting on an ink surface */
+.ring-on-ink:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 3px;
+}
+
+/* ---- hero entrance choreography (pure CSS, plays on paint) ---------------- */
+
+@keyframes gl-word-rise {
+  from {
+    transform: translateY(115%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes gl-fade-blur {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes gl-rise-fade {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gl-kv-in {
+  from {
+    opacity: 0;
+    transform: translateY(42px) scale(1.03);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.gl-word,
+.gl-fade-blur,
+.gl-rise-fade,
+.gl-kv-in {
+  animation-delay: var(--gl-delay, 0s);
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gl-word {
+  display: inline-block;
+  animation-name: gl-word-rise;
+  animation-duration: 0.75s;
+}
+.gl-fade-blur {
+  animation-name: gl-fade-blur;
+  animation-duration: 0.6s;
+}
+.gl-rise-fade {
+  animation-name: gl-rise-fade;
+  animation-duration: 0.55s;
+}
+.gl-kv-in {
+  animation-name: gl-kv-in;
+  animation-duration: 0.85s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

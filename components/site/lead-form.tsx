@@ -1,0 +1,400 @@
+"use client";
+
+import * as React from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { Loader2 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Container, Kicker } from "./primitives";
+import { PROGRAM } from "./data";
+import { cn } from "@/lib/utils";
+
+type Fields = { name: string; email: string; phone: string; interest: string };
+type Errors = Partial<Record<keyof Fields, string>>;
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^[+()\d][\d\s()-]{6,}$/;
+
+/** Qualifier — everyone still gets the breakdown; this just tells the team who's hot. */
+const INTERESTS = [
+  { value: "join", label: "I'm ready to join Cohort 01" },
+  { value: "learn", label: "Interested — I want more details first" },
+  { value: "resources", label: "Mostly here for the free resources" },
+] as const;
+
+/** What the bonus PDF opens up. */
+const TEARDOWN = [
+  "The brief",
+  "Strategy",
+  "Creative",
+  "Budget",
+  "Weekly optimisation",
+  "The results readout",
+];
+
+function validate(f: Fields): Errors {
+  const e: Errors = {};
+  if (f.name.trim().length < 2) e.name = "Please enter your full name.";
+  if (!EMAIL_RE.test(f.email.trim())) e.email = "Enter a valid email address.";
+  if (!PHONE_RE.test(f.phone.trim()))
+    e.phone = "Enter a valid phone number (min 7 digits).";
+  if (!f.interest) e.interest = "Let us know which one fits.";
+  return e;
+}
+
+const DETAILS: [string, string][] = [
+  ["Cohort", `01 · ${PROGRAM.dates}`],
+  ["Schedule", "Mon & Wed · 6–8 PM"],
+  ["Format", PROGRAM.format],
+  ["Price", `$${PROGRAM.price} one-time`],
+  ["Contact", ` ${PROGRAM.contactPhone}`],
+];
+
+export function LeadForm() {
+  const reduce = useReducedMotion();
+  const [fields, setFields] = React.useState<Fields>({
+    name: "",
+    email: "",
+    phone: "",
+    interest: "",
+  });
+  const [errors, setErrors] = React.useState<Errors>({});
+  const [touched, setTouched] = React.useState<
+    Partial<Record<keyof Fields, boolean>>
+  >({});
+  const [status, setStatus] = React.useState<"idle" | "submitting" | "done">(
+    "idle",
+  );
+
+  const set = (k: keyof Fields) => (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const next = { ...fields, [k]: ev.target.value };
+    setFields(next);
+    if (touched[k]) setErrors(validate(next));
+  };
+
+  const blur = (k: keyof Fields) => () => {
+    setTouched((t) => ({ ...t, [k]: true }));
+    setErrors(validate(fields));
+  };
+
+  const pickInterest = (value: string) => {
+    const next = { ...fields, interest: value };
+    setFields(next);
+    setTouched((t) => ({ ...t, interest: true }));
+    setErrors(validate(next));
+  };
+
+  async function onSubmit(ev: React.FormEvent) {
+    ev.preventDefault();
+    const e = validate(fields);
+    setErrors(e);
+    setTouched({ name: true, email: true, phone: true, interest: true });
+    if (Object.keys(e).length > 0) {
+      document
+        .querySelector<HTMLElement>('[aria-invalid="true"]')
+        ?.focus();
+      return;
+    }
+    setStatus("submitting");
+    await new Promise((r) => setTimeout(r, 900));
+    setStatus("done");
+  }
+
+  return (
+    <section
+      id="apply"
+      className="scroll-mt-16 border-t border-ink bg-ink py-24 text-paper sm:py-32"
+    >
+      <Container>
+        <div className="grid gap-x-8 gap-y-12 lg:grid-cols-12">
+          {/* left — statement + ledger + bonus */}
+          <div className="lg:col-span-5">
+            <Kicker className="text-paper/45">09 / Reserve your seat</Kicker>
+            <h2 className="mt-5 text-balance font-display text-[clamp(2.25rem,6vw,4rem)] font-black uppercase leading-[0.95] tracking-[-0.035em]">
+              Join the Founding Cohort
+            </h2>
+            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-paper/70">
+              <span className="font-medium text-paper">
+                Your degree taught you marketing. Now it&apos;s time to{" "}
+                <span className="text-orange-ink">practice it</span>.
+              </span>{" "}
+              Leave your details and we&apos;ll come back with next steps for
+              Cohort 01 — seats are limited.
+            </p>
+
+            <dl className="mt-9 max-w-sm">
+              {DETAILS.map(([k, v]) => (
+                <div
+                  key={k}
+                  className="flex items-baseline justify-between gap-4 border-t border-paper/15 py-2.5"
+                >
+                  <dt className="kicker text-paper/45">{k}</dt>
+                  <dd className="text-right text-[13px] font-medium tracking-tight text-paper">
+                    {v}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          {/* right — the bonus, headlined, then the form */}
+          <div className="lg:col-span-6 lg:col-start-7">
+            <div className="mb-6">
+              <span className="kicker text-orange-ink [font-size:0.62rem]">
+                Free when you register
+              </span>
+              <h3 className="mt-2 font-display text-[1.6rem] font-black uppercase leading-[1.02] tracking-[-0.025em] text-paper sm:text-[2rem]">
+                Anatomy of a Real Campaign
+              </h3>
+              <p className="mt-2.5 max-w-md text-[13px] leading-relaxed text-paper/60">
+                One live client engagement, opened end to end — the same shape
+                you&apos;d run inside GrowthLab. Yours with the full program
+                breakdown.
+              </p>
+              <ul className="mt-3 flex flex-wrap gap-1.5">
+                {TEARDOWN.map((x) => (
+                  <li
+                    key={x}
+                    className="rounded-full border border-paper/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide text-paper/55"
+                  >
+                    {x}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-2xl border border-paper/20 bg-paper p-6 text-ink sm:p-9">
+              <AnimatePresence mode="wait">
+                {status === "done" ? (
+                  <motion.div
+                    key="success"
+                    initial={reduce ? false : { opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex flex-col items-start py-8"
+                  >
+                    <motion.span
+                      initial={reduce ? false : { scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                      className="grid h-12 w-12 place-items-center rounded-full bg-ink text-paper"
+                    >
+                      <svg viewBox="0 0 14 14" className="h-5 w-5" aria-hidden>
+                        <path
+                          d="M2 7.5l3.5 3.5L12 3"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          fill="none"
+                        />
+                      </svg>
+                    </motion.span>
+                    <h3 className="mt-5 font-display text-xl font-bold tracking-tight">
+                      You&apos;re on the list
+                    </h3>
+                    <p className="mt-2 max-w-xs text-[14px] leading-relaxed text-ink-2">
+                      Thanks, {fields.name.split(" ")[0] || "there"}. We&apos;ll
+                      email you the program breakdown and{" "}
+                      <span className="text-ink">Anatomy of a Real Campaign</span>{" "}
+                      shortly.
+                    </p>
+                    <Button
+                      variant="ghost"
+                      className="mt-5 px-0"
+                      onClick={() => {
+                        setFields({
+                          name: "",
+                          email: "",
+                          phone: "",
+                          interest: "",
+                        });
+                        setTouched({});
+                        setErrors({});
+                        setStatus("idle");
+                      }}
+                    >
+                      Submit another
+                    </Button>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    initial={reduce ? false : { opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={reduce ? undefined : { opacity: 0 }}
+                    onSubmit={onSubmit}
+                    noValidate
+                    className="flex flex-col gap-7"
+                  >
+                    <Field id="name" label="Full name" error={errors.name}>
+                      <Input
+                        id="name"
+                        name="name"
+                        autoComplete="name"
+                        placeholder="Jane Doe"
+                        value={fields.name}
+                        onChange={set("name")}
+                        onBlur={blur("name")}
+                        invalid={!!errors.name}
+                        disabled={status === "submitting"}
+                      />
+                    </Field>
+
+                    <Field id="email" label="Email" error={errors.email}>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        inputMode="email"
+                        autoComplete="email"
+                        placeholder="jane@email.com"
+                        value={fields.email}
+                        onChange={set("email")}
+                        onBlur={blur("email")}
+                        invalid={!!errors.email}
+                        disabled={status === "submitting"}
+                      />
+                    </Field>
+
+                    <Field id="phone" label="Phone number" error={errors.phone}>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        inputMode="tel"
+                        autoComplete="tel"
+                        placeholder="+961 3 000 000"
+                        value={fields.phone}
+                        onChange={set("phone")}
+                        onBlur={blur("phone")}
+                        invalid={!!errors.phone}
+                        disabled={status === "submitting"}
+                      />
+                    </Field>
+
+                    <fieldset
+                      className="flex flex-col gap-2"
+                      disabled={status === "submitting"}
+                    >
+                      <legend className="kicker mb-1.5 text-ink-3 [font-size:0.68rem]">
+                        What brings you here?
+                      </legend>
+                      <div className="flex flex-col overflow-hidden rounded-[3px] border border-ink/15">
+                        {INTERESTS.map((opt, i) => {
+                          const checked = fields.interest === opt.value;
+                          return (
+                            <label
+                              key={opt.value}
+                              className={cn(
+                                "flex cursor-pointer items-center gap-3 px-4 py-3.5 text-[14px] transition-colors",
+                                "has-[:focus-visible]:bg-ink/[0.04]",
+                                i > 0 && "border-t border-ink/12",
+                                checked
+                                  ? "bg-ink/[0.03] font-medium text-ink"
+                                  : "text-ink-2 hover:bg-ink/[0.02]",
+                              )}
+                            >
+                              <input
+                                type="radio"
+                                name="interest"
+                                value={opt.value}
+                                checked={checked}
+                                onChange={() => pickInterest(opt.value)}
+                                aria-invalid={
+                                  (i === 0 && !!errors.interest) || undefined
+                                }
+                                className="sr-only"
+                              />
+                              <span
+                                aria-hidden
+                                className={cn(
+                                  "grid size-[18px] shrink-0 place-items-center rounded-full border transition-colors",
+                                  checked
+                                    ? "border-ink bg-ink"
+                                    : "border-ink/30",
+                                )}
+                              >
+                                {checked && (
+                                  <span className="size-1.5 rounded-full bg-paper" />
+                                )}
+                              </span>
+                              {opt.label}
+                            </label>
+                          );
+                        })}
+                      </div>
+                      <AnimatePresence>
+                        {errors.interest && (
+                          <motion.p
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            role="alert"
+                            className="text-[12px] text-orange"
+                          >
+                            {errors.interest}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                    </fieldset>
+
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="mt-1 w-full"
+                      disabled={status === "submitting"}
+                    >
+                      {status === "submitting" ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          Sending…
+                        </>
+                      ) : (
+                        "Send me the breakdown"
+                      )}
+                    </Button>
+                    <p className="text-center text-[12px] text-ink-3">
+                      Program breakdown + the campaign teardown, straight to your
+                      inbox.
+                    </p>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+function Field({
+  id,
+  label,
+  error,
+  children,
+}: {
+  id: string;
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-2">
+      <Label htmlFor={id}>{label}</Label>
+      {children}
+      <AnimatePresence>
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            role="alert"
+            className="text-[12px] text-orange"
+          >
+            {error}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
