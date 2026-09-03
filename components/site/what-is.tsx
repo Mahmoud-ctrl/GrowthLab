@@ -25,7 +25,7 @@ export function WhatIs() {
             <Reveal delay={0.08} className="mt-6">
               <div className="rounded-2xl bg-ink p-7 shadow-[0_28px_64px_-24px_rgba(18,32,58,0.5)] sm:p-9">
                 <p className="max-w-xl font-display text-lg font-bold leading-[1.45] tracking-[-0.01em] text-paper-on-ink sm:text-xl">
-                  Not a <CrossOut>classroom</CrossOut>. Not an <CrossOut>online course</CrossOut>.
+                  Not a <CrossOut>classroom</CrossOut>. Not a <CrossOut>pre-recorded course</CrossOut>.
                   GrowthLab is a{" "}
                   <span className="text-orange-ink">
                     hands-on learning experience that bridges the gap

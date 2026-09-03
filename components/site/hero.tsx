@@ -77,7 +77,7 @@ export function Hero() {
             />
             <div
               role="img"
-              aria-label="A hand holding a phone showing a marketing campaign dashboard — total ad spend, conversions, and per-platform performance across Google, Meta, and TikTok Ads"
+              aria-label="A hand holding a phone showing a marketing campaign dashboard with total ad spend, conversions, and per-platform performance across Google, Meta, and TikTok Ads"
               className="relative aspect-square bg-paper bg-[url('/hero-phone.webp')] bg-cover bg-left bg-no-repeat [background-blend-mode:multiply] lg:aspect-[10/11]"
             >
               <div
@@ -135,8 +135,9 @@ export function Hero() {
               className="gl-fade-blur mt-7 max-w-xl text-lg font-normal leading-relaxed text-ink"
               style={delayVar(0.55)}
             >
-              An 8-week intensive agency simulation where you execute live ad budgets, build real
-              campaigns, and deliver client proof.
+              An 8-week hands-on experience where you work on real client projects, learn from
+              industry experts, and build the practical skills and experience you need to start your
+              career in digital marketing.
             </p>
 
             <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:gap-5">
@@ -145,15 +146,10 @@ export function Hero() {
                   onClick={() =>
                     document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
                   }
-                  className="group relative inline-flex h-[4.75rem] items-center gap-6 rounded-full bg-ink pl-9 pr-3 text-sm font-medium tracking-wide text-white shadow-[0_12px_32px_-8px_rgba(18,32,58,0.3)] transition-all duration-300 hover:bg-[#1c2e52] hover:shadow-[0_16px_40px_-6px_rgba(18,32,58,0.4)] hover:scale-[1.02] active:scale-[0.98]"
+                  className="group relative inline-flex h-16 items-center gap-5 rounded-full bg-ink pl-8 pr-3 text-sm font-semibold tracking-wide text-white shadow-[0_12px_32px_-8px_rgba(18,32,58,0.3)] transition-all duration-300 hover:bg-[#1c2e52] hover:shadow-[0_16px_40px_-6px_rgba(18,32,58,0.4)] hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  <div className="flex flex-col items-start text-left leading-tight">
-                    <span className="text-[15px] font-semibold text-white">Apply to Founding Cohort</span>
-                    <span className="mt-0.5 text-xs font-normal text-white/60">
-                      One-time enrollment · $300
-                    </span>
-                  </div>
-                  <div className="grid h-12 w-12 place-items-center rounded-full bg-orange text-white shadow-md transition-transform duration-300 group-hover:rotate-45">
+                  <span className="whitespace-nowrap text-[15px] font-semibold text-white">Apply now</span>
+                  <div className="grid h-11 w-11 place-items-center rounded-full bg-orange text-white shadow-md transition-transform duration-300 group-hover:rotate-45">
                     <svg viewBox="0 0 16 16" className="h-[18px] w-[18px] stroke-[2]" aria-hidden="true">
                       <path
                         d="M4.5 11.5L11.5 4.5M11.5 4.5H5.5M11.5 4.5V10.5"

@@ -5,7 +5,7 @@ export function Logo({ className }: { className?: string }) {
   return (
     <Image
       src="/assets/growthlab-logo.webp"
-      alt="GrowthLab — Bridging Education & Industry"
+      alt="GrowthLab · Bridging Education & Industry"
       width={560}
       height={187}
       priority

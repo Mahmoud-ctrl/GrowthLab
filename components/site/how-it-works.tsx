@@ -103,18 +103,18 @@ export function HowItWorks() {
                 </h2>
               </Reveal>
               <ScrollReveal className="mt-5 max-w-sm text-[15px] leading-relaxed text-ink-2">
-                Three moves, every week — the same loop a real agency runs, from
-                the first training session to the final client presentation.
+                Learn. Apply. Deliver. Every week, you’ll follow the real agency
+                workflow from training to final client presentation.
               </ScrollReveal>
               <Reveal className="mt-8" delay={0.1}>
                 <motion.button
-                  onClick={() => scrollTo("curriculum")}
+                  onClick={() => scrollTo("apply")}
                   whileHover={reduce ? undefined : { y: -2 }}
                   whileTap={reduce ? undefined : { scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 420, damping: 26 }}
                   className="group inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-4 text-sm font-semibold text-paper shadow-[0_12px_32px_-12px_rgba(18,32,58,0.4)] transition-[background-color,box-shadow] duration-200 hover:bg-[#1c2e52] hover:shadow-[0_16px_40px_-10px_rgba(18,32,58,0.45)]"
                 >
-                  See the 8-week curriculum
+                  Download the 8-week curriculum
                   <span
                     aria-hidden
                     className="transition-transform duration-200 group-hover:translate-x-1"

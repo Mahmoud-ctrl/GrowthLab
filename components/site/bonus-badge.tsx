@@ -66,7 +66,7 @@ export function BonusBadge() {
                   Free bonus PDF
                 </span>
                 <span className="block max-w-[52vw] truncate text-[12.5px] font-semibold tracking-tight sm:max-w-none">
-                  Anatomy of a Real Campaign
+                  Strategy of a Real Campaign
                 </span>
               </span>
             </button>

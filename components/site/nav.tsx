@@ -5,7 +5,6 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
-import { PROGRAM } from "./data";
 
 const LINKS = [
   { href: "#problem", label: "The Problem" },
@@ -107,7 +106,7 @@ export function SiteNav() {
         {/* Brand Logo */}
         <button
           onClick={() => go("top")}
-          aria-label="GrowthLab — top"
+          aria-label="GrowthLab, back to top"
           className="flex shrink-0 items-center rounded-full px-2 py-1.5 transition-transform hover:scale-95 sm:px-3"
         >
           <Logo className="h-9 w-auto sm:h-12" />
@@ -132,9 +131,7 @@ export function SiteNav() {
             onClick={() => go("apply")}
             className="group relative flex h-11 items-center gap-2 rounded-full bg-[#12203A] pl-4 pr-1.5 text-xs font-semibold uppercase tracking-wider text-white shadow-sm transition-all duration-300 hover:bg-orange-500 hover:text-white sm:pl-5"
           >
-            <span>
-              Apply<span className="hidden sm:inline"> — ${PROGRAM.price}</span>
-            </span>
+            <span>Apply Now</span>
             <span className="grid h-8 w-8 place-items-center rounded-full bg-white/20 text-white transition-all duration-300 group-hover:bg-white group-hover:text-orange-500">
               <ArrowGlyph />
             </span>
@@ -188,7 +185,7 @@ export function SiteNav() {
               onClick={() => go("apply")}
               className="flex w-full items-center justify-between rounded-2xl bg-[#12203A] px-4 py-3.5 text-left text-[13px] font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-[#1c2e52]"
             >
-              Apply — ${PROGRAM.price}
+              Apply Now
               <span
                 aria-hidden
                 className="grid size-7 place-items-center rounded-full bg-orange text-[#12203A]"

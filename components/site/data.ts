@@ -2,15 +2,19 @@ export const PROGRAM = {
   name: "GrowthLab",
   tagline: "Bridging Education & Industry",
   program: "Digital Marketing Agency Experience",
-  cohort: "Founding Cohort",
+  cohort: "September Cohort",
   dates: "September – October 2026",
-  format: "8 Weeks · Hybrid",
+  format: "8 Weeks · Online",
   liveHours: 32,
   weeks: 8,
   trainings: 16,
   price: 300,
   schedule: "Mondays & Wednesdays · 6:00–8:00 PM",
   contactPhone: "03 412 557",
+  /** International format, digits only — used for the wa.me link. TODO: confirm the doctor's number. */
+  whatsappNumber: "9613412557",
+  whatsappMessage: "Hi, I'd like to know more about the GrowthLab program.",
+  email: "info@growthlabme.com",
   instagramUrl: "https://www.instagram.com/growthlabme",
   tiktokUrl: "https://www.tiktok.com/@growthlablebanon",
 };
@@ -53,27 +57,27 @@ export const CONTRAST = {
 export const PIPELINE: { title: string; body: string }[] = [
   {
     title: "Real client",
-    body: "A live business hands your team a brief and a real problem to solve — not a case study.",
+    body: "You’ll work with a real client, tackle their actual marketing challenges, and build solutions that can be put into practice; not just another case study.",
   },
   {
     title: "Strategy",
-    body: "Research the market, define the audience, and set the plan you'll execute against.",
+    body: "Understand the client, research their market and audience, and build a marketing strategy you’ll put into action.",
   },
   {
     title: "Content",
-    body: "Produce the assets the campaign needs — copy, creative, and landing pages.",
+    body: "Turn your strategy into execution by creating the copy, creatives, and landing pages for your client’s campaign",
   },
   {
     title: "Campaigns",
-    body: "Launch across Google, Meta and TikTok with real budget and real targets.",
+    body: "Put your strategy into action by launching real campaigns on Google and Meta with real budgets and measurable targets",
   },
   {
     title: "Analytics",
-    body: "Read the numbers every week, cut what's failing, and double down on what works.",
+    body: "Monitor campaign performance, analyze the results, and optimize your strategy based on what’s working and what needs to improve.",
   },
   {
     title: "Final presentation",
-    body: "Present results and recommendations to the client, agency-style.",
+    body: "Present your results and strategic recommendations directly to the client, just like a real agency.",
   },
 ];
 
@@ -82,12 +86,12 @@ export const HOW_IT_WORKS = [
   {
     tag: "Learn",
     title: "Live expert-led training",
-    body: "16 sessions with practitioners — strategy, content, paid media and analytics — Monday and Wednesday, 6–8 PM.",
+    body: "16 hands-on sessions led by industry practitioners, covering strategy, content, paid media, SEO, and analytics. Every session connects directly to your real client project. Mondays & Wednesdays, 6–8 PM.",
   },
   {
     tag: "Work",
-    title: "Apply it the same week",
-    body: "Everything you learn goes straight onto a real client project with your team — research, planning, creating, analysing.",
+    title: "Apply What You Learn Immediately",
+    body: "Put every new skill into practice on your real client project, working with your team from research and strategy to execution and analysis.",
   },
   {
     tag: "Present",
@@ -197,7 +201,7 @@ export const CURRICULUM: Week[] = [
           "Website objectives · User journey · Sitemap · UX/UI basics · Landing pages · CTAs · Forms · Conversion principles",
       },
       {
-        title: "SEO, GEO & Search Visibility — The Essentials",
+        title: "SEO, GEO & Search Visibility: The Essentials",
         day: "Wednesday",
         topics:
           "Keyword research · Search intent · On-page SEO · Search Console · SEO tools · GEO/AEO · AI search visibility",
@@ -279,17 +283,17 @@ export type Benefit = {
 export const BENEFITS: Benefit[] = [
   {
     title: "Certificate",
-    body: "Proof of your GrowthLab experience — a real engagement, not a course you sat through.",
+    body: "Proof that you didn’t just complete a course, you gained hands-on experience working on a real client project.",
     span: "lg",
   },
   {
     title: "A professional portfolio",
-    body: "Work you can confidently put in front of a hiring manager.",
+    body: "Build a portfolio that demonstrates what you can actually do, not just what you’ve studied.",
     span: "sm",
   },
   {
     title: "Real-world experience",
-    body: "You see how a marketing team actually works, from the inside.",
+    body: "Experience how a real marketing team works, from client brief to strategy, execution, and results.",
     span: "sm",
   },
   {
@@ -305,7 +309,7 @@ export const BENEFITS: Benefit[] = [
   },
   {
     title: "Agency workflow experience",
-    body: "Collaboration, deadlines, feedback and presentations — the operating rhythm, not just the tactics.",
+    body: "Collaborate, meet deadlines, receive feedback, and present your work, just like you would in a real marketing team.",
     span: "lg",
     facets: ["Collaboration", "Deadlines", "Feedback", "Presentations"],
   },
@@ -318,12 +322,16 @@ export const FAQ: { q: string; a: string }[] = [
     a: "No. You’re trained from the ground up, then apply each skill on a real client project the same week.",
   },
   {
+    q: "How do I apply?",
+    a: "Fill in the form on this page with your name, email and phone. We’ll email you the full program breakdown and follow up with enrollment and payment details to secure your seat.",
+  },
+  {
     q: "Is it online or in person?",
-    a: "Hybrid. Live training runs Mondays and Wednesdays, 6:00–8:00 PM; team project work happens online through the week.",
+    a: "Online Learning. Real-World Workshops. Join online sessions every Monday and Wednesday, 6:00–8:00 PM, with selected face-to-face workshops and collaborative team work on your real client project throughout the program.",
   },
   {
     q: "How much time will it take?",
-    a: "About 4 hours of live training a week, plus a few hours of team project work — roughly 32 training hours over 8 weeks.",
+    a: "4 hours of online training each week, complemented by team project work and face-to-face workshops, 32 hours of structured learning across 8 weeks.",
   },
   {
     q: "What if I miss a session?",
@@ -335,7 +343,7 @@ export const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "Who is it for?",
-    a: "Anyone who studied marketing but can’t apply it yet, or wants real practice and confidence before the job market — and something more hands-on than a course.",
+    a: "Anyone who studied marketing but can’t apply it yet, or wants real practice and confidence before the job market, and something more hands-on than a course.",
   },
 ];
 
@@ -356,8 +364,8 @@ export const PROGRAM_INFO: [string, string][] = [
   ["Duration", "8 weeks"],
   ["Dates", "September – October 2026"],
   ["Schedule", "Mondays & Wednesdays · 6–8 PM"],
-  ["Format", "Hybrid"],
-  ["Live training", "32 hours"],
+  ["Format", "Online"],
+  ["Online training", "32 hours"],
   ["Seats", "Limited"],
   ["Price", "$300"],
 ];

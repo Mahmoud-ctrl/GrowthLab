@@ -69,11 +69,16 @@ export function DepthCarousel({
     if (!el) return;
     const measure = () => {
       const w = el.clientWidth;
-      const cardW = Math.max(240, Math.min(w * 0.64, 340));
+      // On phones the card must carry the full body copy, so give it most of
+      // the width and a taller ratio; the wider desktop stage can stay compact.
+      const narrow = w < 480;
+      const cardW = narrow
+        ? Math.min(w * 0.88, 340)
+        : Math.max(240, Math.min(w * 0.64, 340));
       setMetrics({
         cardW,
-        cardH: Math.round(cardW * 1.04),
-        spread: Math.round(cardW * 0.7),
+        cardH: Math.round(cardW * (narrow ? 1.34 : 1.04)),
+        spread: Math.round(cardW * (narrow ? 0.84 : 0.7)),
         depth: Math.round(cardW * 0.55),
       });
     };

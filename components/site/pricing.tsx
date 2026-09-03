@@ -18,13 +18,13 @@ export function Pricing() {
           <div className="overflow-hidden rounded-xl border border-ink/10 bg-white/50 shadow-sm backdrop-blur-sm">
             {/* header band */}
             <div className="flex flex-wrap items-center justify-between gap-3 bg-ink/5 px-6 py-3 sm:px-8">
-              <Kicker>GrowthLab — Founding Cohort</Kicker>
+              <Kicker>GrowthLab · September Cohort</Kicker>
               <Kicker className="text-red-500">Limited seats</Kicker>
             </div>
 
             <div className="px-6 pb-9 pt-12 text-center sm:px-8 sm:py-16">
               <h2 className="font-display text-[clamp(2.25rem,6vw,3.75rem)] font-black uppercase leading-[0.95] tracking-[-0.035em] text-ink">
-                Join the founding cohort
+                Join the September cohort
               </h2>
 
               <div className="mt-10 flex items-start justify-center gap-2">
@@ -33,7 +33,6 @@ export function Pricing() {
                   {PROGRAM.price}
                 </span>
               </div>
-              <p className="kicker mt-4 text-ink-3">One-time payment</p>
 
               {/* Enhanced CTA Area */}
               <div className="mx-auto mt-9 flex max-w-sm flex-col items-center gap-4">

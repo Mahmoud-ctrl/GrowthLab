@@ -12,10 +12,12 @@ import { Pricing } from "@/components/site/pricing";
 import { LeadForm } from "@/components/site/lead-form";
 import { SiteFooter } from "@/components/site/footer";
 import { BonusBadge } from "@/components/site/bonus-badge";
+import { StructuredData } from "@/components/structured-data";
 
 export default function Home() {
   return (
     <>
+      <StructuredData />
       <SiteNav />
       <main className="flex flex-1 flex-col">
         <Hero />

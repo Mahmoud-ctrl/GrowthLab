@@ -29,9 +29,9 @@ function CountUp({ to }: { to: number }) {
 }
 
 const STATS = [
-  { n: 16, label: "Trainings", caption: "Live, hands-on sessions" },
-  { n: 8, label: "Deliverables", caption: "Real client-ready work" },
-  { n: 8, label: "Weeks", caption: "Intensive agency simulation" },
+  { n: 16, label: "Trainings", caption: "Online – Practical Sessions" },
+  { n: 8, label: "Deliverables", caption: "Work on Real Client Projects" },
+  { n: 8, label: "Weeks", caption: "Structured, week by week" },
 ];
 
 export function Curriculum() {
@@ -50,9 +50,10 @@ export function Curriculum() {
               </h2>
             </Reveal>
             <ScrollReveal className="mt-5 max-w-lg text-[15px] leading-relaxed text-ink-2">
-              Eight weeks inside a working agency — structured training paired
-              with real client deliverables, from discovery to a finished
-              strategy.
+              Eight weeks of real agency-style experience. Learn from industry
+              experts, work with your team on a real client project, and
+              experience the full marketing workflow, from discovery and strategy
+              to execution and final client deliverables.
             </ScrollReveal>
 
             <Reveal className="mt-10 sm:mt-12" delay={0.1}>

@@ -125,7 +125,7 @@ body {
   }
 }
 .gl-marquee {
-  animation: gl-marquee 34s linear infinite;
+  animation: gl-marquee 18s linear infinite;
   will-change: transform;
 }
 
