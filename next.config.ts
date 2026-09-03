@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Ensure the lead route can read the program PDF from disk in the serverless bundle.
+  // Ensure the lead route can read the guide PDF it attaches from disk in the
+  // serverless bundle.
   outputFileTracingIncludes: {
-    "/api/lead": ["./public/growthlab-founding-cohort-program.pdf"],
+    "/api/lead": ["./public/growthlab-digital-marketing-guide.pdf"],
   },
 };
 

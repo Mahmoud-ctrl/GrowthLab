@@ -158,7 +158,7 @@ export function LeadForm() {
                     </h3>
                     <p className="mt-2 max-w-xs text-[14px] leading-relaxed text-ink-2">
                       Thanks, {fields.name.split(" ")[0] || "there"}. We just
-                      emailed you the full program details.
+                      emailed you your free Digital Marketing Strategy Guide.
                     </p>
                   </motion.div>
                 ) : (
@@ -172,18 +172,25 @@ export function LeadForm() {
                     className="relative flex flex-col gap-7"
                   >
                     {/* honeypot — off-screen, absolutely positioned so it is not a
-                        flex item and adds no gap; real users never reach it */}
+                        flex item and adds no gap; real users never reach it.
+                        The field must NOT be named "company"/"organization" or
+                        carry a matching label: Chrome autofill + password managers
+                        fill it, which then drops every real submission. Bots that
+                        blindly fill all inputs still trip it. The payload key
+                        stays `company` so the API route is unchanged. */}
                     <div
                       className="absolute -left-[9999px] top-0"
                       aria-hidden="true"
                     >
-                      <label htmlFor="company">Company</label>
+                      <label htmlFor="hp-referral">Referral code</label>
                       <input
-                        id="company"
-                        name="company"
+                        id="hp-referral"
+                        name="hp-referral"
                         type="text"
                         tabIndex={-1}
                         autoComplete="off"
+                        data-1p-ignore
+                        data-lpignore="true"
                         value={company}
                         onChange={(e) => setCompany(e.target.value)}
                       />
@@ -262,7 +269,8 @@ export function LeadForm() {
                       </p>
                     ) : (
                       <p className="text-center text-[12px] text-ink-3">
-                        The full program details, straight to your inbox.
+                        Your free Digital Marketing Strategy Guide, straight to
+                        your inbox.
                       </p>
                     )}
                   </motion.form>

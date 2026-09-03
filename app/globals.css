@@ -88,6 +88,23 @@ body {
   color: var(--paper);
 }
 
+/* Tailwind v4's Preflight no longer sets a pointer cursor on buttons — restore
+   it for every interactive control. Utility classes (cursor-default, etc.) still
+   win where a component overrides this. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  summary,
+  select:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [role="button"][aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
+
 /* ---- editorial primitives -------------------------------------------------- */
 
 /* the label voice: mono, uppercase, wide, small */

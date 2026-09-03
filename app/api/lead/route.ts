@@ -8,9 +8,11 @@ import { abs } from "@/lib/site";
 export const runtime = "nodejs";
 
 const BREVO_API = "https://api.brevo.com/v3";
-const PDF_SLUG = "growthlab-founding-cohort-program.pdf";
+// The free lead magnet — the only PDF the email delivers. The full cohort
+// program PDF is download-only from the /thank-you page, never emailed.
+const PDF_SLUG = "growthlab-digital-marketing-guide.pdf";
 const PDF_PATH = join(process.cwd(), "public", PDF_SLUG);
-const PDF_FILENAME = "GrowthLab Founding Cohort Program.pdf";
+const PDF_FILENAME = "GrowthLab Digital Marketing Strategy Guide.pdf";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -100,7 +102,7 @@ export async function POST(request: Request) {
       const pdf = await readFile(PDF_PATH);
       attachment = [{ content: pdf.toString("base64"), name: PDF_FILENAME }];
     } catch (err) {
-      console.error("[lead] could not read program PDF", err);
+      console.error("[lead] could not read the guide PDF", err);
     }
 
     const emailRes = await fetch(`${BREVO_API}/smtp/email`, {
@@ -110,7 +112,7 @@ export async function POST(request: Request) {
         sender: { name: senderName, email: senderEmail },
         to: [{ email, name }],
         replyTo: { email: senderEmail, name: senderName },
-        subject: "Your GrowthLab program details",
+        subject: "Your free GrowthLab Digital Marketing Strategy Guide",
         htmlContent: welcomeEmailHtml(firstName),
         attachment,
         tags: ["lead-magnet"],
@@ -148,21 +150,33 @@ function welcomeEmailHtml(firstName: string) {
           <table role="presentation" width="520" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:14px;padding:36px">
             <tr><td>
               <p style="margin:0 0 8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#d8451c">GrowthLab</p>
-              <h1 style="margin:0 0 18px;font-size:22px;line-height:1.25">Thanks for your interest.</h1>
+              <h1 style="margin:0 0 18px;font-size:22px;line-height:1.25">Thank you for your interest in GrowthLab.</h1>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6">${hi}</p>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
-                The full GrowthLab program details are attached to this email as a PDF.
-                It covers the 8-week structure, the weekly training breakdown, the client
-                project, and everything you walk away with.
+                Thank you for filling out the form and taking the first step toward
+                joining GrowthLab. Your free <strong>Digital Marketing Strategy Guide</strong>
+                is attached to this email as a PDF.
+              </p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
+                It walks through the key elements behind an effective digital marketing
+                strategy &mdash; market research, audience definition, objectives, channel
+                selection, campaign planning and performance measurement &mdash; in a
+                practical, easy-to-follow format.
               </p>
               <p style="margin:0 0 24px">
                 <a href="${pdfUrl}"
                    style="display:inline-block;background:#16171d;color:#f2eee2;text-decoration:none;font-weight:600;font-size:14px;padding:12px 22px;border-radius:999px">
-                  View the program details
+                  Download your guide
                 </a>
               </p>
+              <h2 style="margin:0 0 8px;font-size:15px;line-height:1.3;text-transform:uppercase;letter-spacing:0.02em">What happens next?</h2>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
-                If you have any questions, just reply to this email or message us on WhatsApp.
+                Someone from the GrowthLab team will get in touch with you soon to
+                answer any questions and help finalize your registration for the program.
+              </p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
+                If you have any questions in the meantime, just reply to this email
+                or message us on WhatsApp. We look forward to having you with us.
               </p>
               <p style="margin:24px 0 0;font-size:14px;line-height:1.6;color:#4b4c55">
                 The GrowthLab team
