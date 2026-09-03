@@ -12,7 +12,7 @@ export const abs = (path = "/") => new URL(path, SITE_URL).toString();
 
 /** One-line elevator pitch reused across metadata + structured data. */
 export const SITE_DESCRIPTION =
-  "An 8-week online digital marketing agency experience. Learn strategy, content, paid ads and analytics by working on a real client project with a team, then present a full strategy. 32 hours of expert training. September Cohort 2026.";
+  "An 8-week online digital marketing agency experience. Learn strategy, content, paid ads and analytics by working on a real client project with a team, then present a full strategy. 32 hours of expert training. Upcoming Cohort 2026.";
 
 export const SITE_NAME = PROGRAM.name;
 

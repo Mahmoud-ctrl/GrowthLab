@@ -2,7 +2,7 @@ export const PROGRAM = {
   name: "GrowthLab",
   tagline: "Bridging Education & Industry",
   program: "Digital Marketing Agency Experience",
-  cohort: "September Cohort",
+  cohort: "Upcoming Cohort",
   dates: "September – October 2026",
   format: "8 Weeks · Online",
   liveHours: 32,

@@ -60,6 +60,7 @@ export function DepthCarousel({
   const rich = useRichMotion();
 
   const rootRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [metrics, setMetrics] = useState({ cardW: 280, cardH: 320, spread: 196, depth: 168 });
 
@@ -67,17 +68,36 @@ export function DepthCarousel({
   useLayoutEffect(() => {
     const el = rootRef.current;
     if (!el) return;
+    let alive = true;
     const measure = () => {
+      if (!alive) return;
       const w = el.clientWidth;
-      // On phones the card must carry the full body copy, so give it most of
-      // the width and a taller ratio; the wider desktop stage can stay compact.
+      // On phones the card gets most of the width; desktop can stay compact.
       const narrow = w < 480;
       const cardW = narrow
         ? Math.min(w * 0.88, 340)
         : Math.max(240, Math.min(w * 0.64, 340));
+
+      // Desktop keeps its fixed ratio. On mobile the body copy varies a lot in
+      // length, so measure the tallest card's actual content and fit to that —
+      // short enough not to waste space, never so short it clips the text.
+      let cardH = Math.round(cardW * (narrow ? 0.92 : 1.04));
+      if (narrow) {
+        const pad = 48; // p-6 top + bottom
+        stageRef.current
+          ?.querySelectorAll<HTMLElement>("[data-card]")
+          .forEach((cardEl) => {
+            const num = cardEl.querySelector<HTMLElement>("[data-card-num]");
+            const low = cardEl.querySelector<HTMLElement>("[data-card-low]");
+            if (num && low) {
+              cardH = Math.max(cardH, num.offsetHeight + low.offsetHeight + pad);
+            }
+          });
+      }
+
       setMetrics({
         cardW,
-        cardH: Math.round(cardW * (narrow ? 1.34 : 1.04)),
+        cardH,
         spread: Math.round(cardW * (narrow ? 0.84 : 0.7)),
         depth: Math.round(cardW * 0.55),
       });
@@ -85,7 +105,13 @@ export function DepthCarousel({
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(el);
-    return () => ro.disconnect();
+    // web fonts swap in after first paint and change how many lines the copy
+    // wraps to — re-measure once they're ready
+    document.fonts?.ready.then(measure).catch(() => {});
+    return () => {
+      alive = false;
+      ro.disconnect();
+    };
   }, []);
 
   const go = useCallback(
@@ -145,6 +171,7 @@ export function DepthCarousel({
         style={{ height: cardH + 44, perspective: 1500 }}
       >
         <div
+          ref={stageRef}
           className="absolute inset-0"
           style={{ transformStyle: "preserve-3d" }}
         >
@@ -168,6 +195,7 @@ export function DepthCarousel({
               <button
                 key={item.title}
                 type="button"
+                data-card
                 tabIndex={isActive ? 0 : -1}
                 aria-hidden={!isActive}
                 aria-label={`Step ${i + 1} of ${count}: ${item.title}`}
@@ -202,7 +230,10 @@ export function DepthCarousel({
                 />
 
                 {/* one numbering treatment: prominent index, quiet total */}
-                <div className="flex items-baseline gap-1 font-display font-black tabular-nums leading-none">
+                <div
+                  data-card-num
+                  className="flex items-baseline gap-1 font-display font-black tabular-nums leading-none"
+                >
                   <span
                     className={cn(
                       "text-4xl",
@@ -221,7 +252,7 @@ export function DepthCarousel({
                   </span>
                 </div>
 
-                <div className="mt-auto pt-6">
+                <div data-card-low className="mt-auto pt-6">
                   <Icon
                     aria-hidden
                     strokeWidth={1.5}
