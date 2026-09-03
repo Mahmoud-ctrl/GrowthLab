@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Container, Kicker } from "./primitives";
 import { PROGRAM } from "./data";
+import { trackEvent } from "@/lib/track";
 
 type Fields = { name: string; email: string; phone: string };
 type Errors = Partial<Record<keyof Fields, string>>;
@@ -50,8 +51,14 @@ export function LeadForm() {
   >("idle");
   // honeypot — hidden from real users; bots fill it and get silently dropped
   const [company, setCompany] = React.useState("");
+  // fires the Meta "ApplicationStarted" event on the first real keystroke
+  const startedRef = React.useRef(false);
 
   const set = (k: keyof Fields) => (ev: React.ChangeEvent<HTMLInputElement>) => {
+    if (!startedRef.current) {
+      startedRef.current = true;
+      trackEvent("ApplicationStarted");
+    }
     const next = { ...fields, [k]: ev.target.value };
     setFields(next);
     if (touched[k]) setErrors(validate(next));

@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/track";
 
 /**
  * The site's primary pill CTA. Colours transition on CSS; the lift and press
@@ -13,11 +14,16 @@ export function CtaButton({
   label,
   className,
   size = "md",
+  track,
+  trackParams,
 }: {
   href: string;
   label: string;
   className?: string;
   size?: "md" | "lg";
+  /** Meta Pixel custom event to fire on click. */
+  track?: string;
+  trackParams?: Record<string, unknown>;
 }) {
   const reduce = useReducedMotion();
   const dims =
@@ -28,6 +34,7 @@ export function CtaButton({
   return (
     <motion.a
       href={href}
+      onClick={track ? () => trackEvent(track, trackParams) : undefined}
       className={cn(
         "ring-editorial group inline-flex items-center gap-3 rounded-full bg-ink pr-2 text-sm font-semibold tracking-tight text-paper transition-colors duration-200 hover:bg-[#1c2e52]",
         dims.box,

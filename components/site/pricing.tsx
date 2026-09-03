@@ -1,6 +1,7 @@
 import { Container, Kicker } from "./primitives";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion-primitives";
 import { CtaButton } from "./cta-button";
+import { ViewTracker } from "./view-tracker";
 import { PROGRAM } from "./data";
 
 const DETAILS: [string, string][] = [
@@ -13,6 +14,7 @@ const DETAILS: [string, string][] = [
 export function Pricing() {
   return (
     <section id="pricing" className="scroll-mt-16 py-24 sm:py-32">
+      <ViewTracker event="ScrollToPricing" targetId="pricing" />
       <Container>
         <Reveal scale={0.985}>
           <div className="overflow-hidden rounded-xl border border-ink/10 bg-white/50 shadow-sm backdrop-blur-sm">
@@ -40,6 +42,8 @@ export function Pricing() {
                   href="#apply"
                   label="Apply now"
                   size="lg"
+                  track="ApplyNowClick"
+                  trackParams={{ location: "pricing" }}
                   className="shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl sm:w-auto"
                 />
               </div>

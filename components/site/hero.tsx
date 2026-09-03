@@ -8,6 +8,7 @@ import {
   SiGooglesearchconsole,
 } from "react-icons/si";
 import { Container } from "./primitives";
+import { trackEvent } from "@/lib/track";
 
 type IconCmp = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -143,9 +144,10 @@ export function Hero() {
             <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:gap-5">
               <div className="gl-rise-fade" style={delayVar(0.68)}>
                 <button
-                  onClick={() =>
-                    document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
-                  }
+                  onClick={() => {
+                    trackEvent("ApplyNowClick", { location: "hero" });
+                    document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" });
+                  }}
                   className="group relative inline-flex h-16 items-center gap-5 rounded-full bg-ink pl-8 pr-3 text-sm font-semibold tracking-wide text-white shadow-[0_12px_32px_-8px_rgba(18,32,58,0.3)] transition-all duration-300 hover:bg-[#1c2e52] hover:shadow-[0_16px_40px_-6px_rgba(18,32,58,0.4)] hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <span className="whitespace-nowrap text-[15px] font-semibold text-white">Apply now</span>

@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
+import { trackEvent } from "@/lib/track";
 
 const LINKS = [
   { href: "#problem", label: "The Problem" },
@@ -128,7 +129,10 @@ export function SiteNav() {
         <div className="flex shrink-0 items-center gap-1.5">
           {/* CTA Pill Button */}
           <button
-            onClick={() => go("apply")}
+            onClick={() => {
+              trackEvent("ApplyNowClick", { location: "nav" });
+              go("apply");
+            }}
             className="group relative flex h-11 items-center gap-2 rounded-full bg-[#12203A] pl-4 pr-1.5 text-xs font-semibold uppercase tracking-wider text-white shadow-sm transition-all duration-300 hover:bg-orange-500 hover:text-white sm:pl-5"
           >
             <span>Apply Now</span>
@@ -182,7 +186,10 @@ export function SiteNav() {
             <div className="mx-2 my-1.5 h-px bg-[#12203A]/10" />
 
             <button
-              onClick={() => go("apply")}
+              onClick={() => {
+                trackEvent("ApplyNowClick", { location: "nav-mobile" });
+                go("apply");
+              }}
               className="flex w-full items-center justify-between rounded-2xl bg-[#12203A] px-4 py-3.5 text-left text-[13px] font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-[#1c2e52]"
             >
               Apply Now
