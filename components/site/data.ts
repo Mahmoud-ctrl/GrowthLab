@@ -3,7 +3,7 @@ export const PROGRAM = {
   tagline: "Bridging Education & Industry",
   program: "Digital Marketing Agency Experience",
   cohort: "Upcoming Cohort",
-  dates: "September – October 2026",
+  dates: "14 September – 4 November 2026",
   format: "8 Weeks · Online",
   liveHours: 32,
   weeks: 8,
@@ -362,7 +362,7 @@ export const THE_EXPERIENCE = [
 /** §11 — quick program info. */
 export const PROGRAM_INFO: [string, string][] = [
   ["Duration", "8 weeks"],
-  ["Dates", "September – 6 November 2026"],
+  ["Dates", "14 September – 4 November 2026"],
   ["Schedule", "Mondays & Wednesdays · 6–8 PM"],
   ["Format", "Online"],
   ["Online training", "32 hours"],
