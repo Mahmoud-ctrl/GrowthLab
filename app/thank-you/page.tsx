@@ -22,7 +22,7 @@ export default function ThankYouPage() {
         <div className="mx-auto max-w-xl text-center">
           <Logo className="mx-auto h-12 w-auto sm:h-14" />
 
-          <h1 className="mt-10 font-display text-[clamp(1.9rem,5.5vw,2.9rem)] font-black uppercase leading-[1.05] tracking-[-0.03em]">
+          <h1 className="mt-10 font-display text-[clamp(1.9rem,5.5vw,2.9rem)] font-black uppercase leading-[1.05] tracking-[-0.03em] [word-spacing:0.1em]">
             Thank You for Your Interest in GrowthLab!
           </h1>
 

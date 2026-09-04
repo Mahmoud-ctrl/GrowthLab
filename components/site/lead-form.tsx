@@ -106,7 +106,7 @@ export function LeadForm() {
             <span className="mt-6 block kicker text-orange-ink [font-size:0.62rem]">
               Free when you register
             </span>
-            <h3 className="mt-2 font-display text-[1.6rem] font-black uppercase leading-[1.02] tracking-[-0.025em] text-paper sm:text-[2rem]">
+            <h3 className="mt-2 font-display text-[1.6rem] font-black uppercase leading-[1.02] tracking-[-0.025em] [word-spacing:0.1em] text-paper sm:text-[2rem]">
               Digital Marketing Strategy Guide
             </h3>
             <p className="mx-auto mt-2.5 max-w-md text-[13px] leading-relaxed text-paper/60 lg:mx-0">

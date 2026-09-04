@@ -12,7 +12,7 @@ export default function NotFound() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-paper px-5 py-24 text-center text-ink">
       <Logo className="mx-auto h-12 w-auto sm:h-14" />
       <p className="kicker mt-10 text-orange">404</p>
-      <h1 className="mt-4 font-display text-[clamp(2rem,6vw,3rem)] font-black uppercase leading-[1.02] tracking-[-0.03em]">
+      <h1 className="mt-4 font-display text-[clamp(2rem,6vw,3rem)] font-black uppercase leading-[1.02] tracking-[-0.03em] [word-spacing:0.1em]">
         Page not found
       </h1>
       <p className="mx-auto mt-5 max-w-sm text-[15px] leading-relaxed text-ink-2">

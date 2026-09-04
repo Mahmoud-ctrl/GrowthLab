@@ -97,7 +97,7 @@ export function HowItWorks() {
             <div className="lg:sticky lg:top-28">
               <Kicker>03 / How it works</Kicker>
               <Reveal>
-                <h2 className="mt-4 text-balance font-display text-[clamp(2rem,4.6vw,3.1rem)] font-extrabold uppercase leading-[1.03] tracking-[-0.03em] text-ink">
+                <h2 className="mt-4 text-balance font-display text-[clamp(2rem,4.6vw,3.1rem)] font-extrabold uppercase leading-[1.03] tracking-[-0.03em] [word-spacing:0.1em] text-ink">
                   Learn it. Apply it.{" "}
                   <span className="text-orange">Deliver it.</span>
                 </h2>

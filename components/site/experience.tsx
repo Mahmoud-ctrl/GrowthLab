@@ -14,7 +14,7 @@ export function Experience() {
 
         <RevealText
           as="h2"
-          className="mt-5 font-display text-[clamp(2.25rem,6vw,4rem)] font-black uppercase leading-[0.95] tracking-[-0.035em]"
+          className="mt-5 font-display text-[clamp(2.25rem,6vw,4rem)] font-black uppercase leading-[0.95] tracking-[-0.035em] [word-spacing:0.1em]"
         >
           For 8 weeks, you&apos;re not a student.
           <br />

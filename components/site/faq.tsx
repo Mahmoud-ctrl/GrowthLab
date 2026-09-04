@@ -21,7 +21,7 @@ export function Faq() {
           </div>
           <div className="lg:col-span-8">
             <Reveal>
-              <h2 className="text-balance font-display text-[clamp(2rem,4.6vw,3.1rem)] font-extrabold uppercase leading-[1.03] tracking-[-0.03em] text-ink">
+              <h2 className="text-balance font-display text-[clamp(2rem,4.6vw,3.1rem)] font-extrabold uppercase leading-[1.03] tracking-[-0.03em] [word-spacing:0.1em] text-ink">
                 Questions, answered.
               </h2>
             </Reveal>
