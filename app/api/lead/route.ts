@@ -72,8 +72,11 @@ export async function POST(request: Request) {
   const listId = Number(process.env.BREVO_LIST_ID);
   const senderEmail = process.env.BREVO_SENDER_EMAIL || PROGRAM.email;
   const senderName = process.env.BREVO_SENDER_NAME || PROGRAM.name;
-  // Internal "new applicant" notification — override with LEAD_NOTIFY_EMAIL.
+  // Internal "new applicant" notification. LEAD_NOTIFY_EMAIL is the recipient;
+  // LEAD_NOTIFY_FROM lets it send from a different verified address than the
+  // recipient (from == to via a relay is a common spam trigger).
   const notifyEmail = process.env.LEAD_NOTIFY_EMAIL || PROGRAM.email;
+  const notifyFrom = process.env.LEAD_NOTIFY_FROM || senderEmail;
 
   const headers = {
     "api-key": apiKey,
@@ -130,7 +133,7 @@ export async function POST(request: Request) {
         sender: { name: senderName, email: senderEmail },
         to: [{ email, name }],
         replyTo: { email: senderEmail, name: senderName },
-        subject: "Welcome to GrowthLab — your program details & guide inside",
+        subject: "Welcome to GrowthLab, your program details & guide inside",
         htmlContent: welcomeEmailHtml(firstName),
         attachment: attachment.length ? attachment : undefined,
         tags: ["lead-magnet"],
@@ -155,11 +158,11 @@ export async function POST(request: Request) {
         method: "POST",
         headers,
         body: JSON.stringify({
-          sender: { name: senderName, email: senderEmail },
+          sender: { name: senderName, email: notifyFrom },
           to: [{ email: notifyEmail }],
           // reply goes straight to the applicant
           replyTo: { email, name },
-          subject: `New GrowthLab application — ${name}`,
+          subject: `New GrowthLab application: ${name}`,
           htmlContent: leadNotificationHtml({ name, email, phone }),
           tags: ["lead-notification"],
         }),
@@ -188,12 +191,22 @@ function welcomeEmailHtml(firstName: string) {
 
   return `<!doctype html>
 <html>
-  <body style="margin:0;background:#f2eee2;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#16171d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+      @media only screen and (max-width:600px){
+        .gl-outer{padding:12px 6px!important}
+        .gl-card{padding:24px 18px!important;border-radius:10px!important}
+      }
+    </style>
+  </head>
+  <body style="margin:0;padding:0;background:#f2eee2;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#16171d">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f2eee2">
       <tr>
-        <td align="center" style="padding:40px 20px">
-          <table role="presentation" width="520" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:14px;padding:36px">
-            <tr><td>
+        <td align="center" class="gl-outer" style="padding:28px 12px">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:14px">
+            <tr><td class="gl-card" style="padding:32px 30px">
               <p style="margin:0 0 8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#d8451c">GrowthLab</p>
               <h1 style="margin:0 0 18px;font-size:22px;line-height:1.25">Welcome to GrowthLab</h1>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6">${hi}</p>
@@ -250,7 +263,7 @@ function welcomeEmailHtml(firstName: string) {
               </p>
             </td></tr>
           </table>
-          <p style="margin:20px 0 0;font-size:12px;color:#8a8b93">© ${new Date().getFullYear()} GrowthLab</p>
+          <p style="margin:16px 0 0;font-size:12px;color:#8a8b93">© ${new Date().getFullYear()} GrowthLab</p>
         </td>
       </tr>
     </table>
@@ -294,12 +307,22 @@ function leadNotificationHtml(lead: {
 
   return `<!doctype html>
 <html>
-  <body style="margin:0;background:#f2eee2;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#16171d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+      @media only screen and (max-width:600px){
+        .gl-outer{padding:12px 6px!important}
+        .gl-card{padding:24px 18px!important;border-radius:10px!important}
+      }
+    </style>
+  </head>
+  <body style="margin:0;padding:0;background:#f2eee2;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#16171d">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f2eee2">
       <tr>
-        <td align="center" style="padding:40px 20px">
-          <table role="presentation" width="520" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:14px;padding:32px">
-            <tr><td>
+        <td align="center" class="gl-outer" style="padding:28px 12px">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:14px">
+            <tr><td class="gl-card" style="padding:30px 26px">
               <p style="margin:0 0 8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#d8451c">GrowthLab · New application</p>
               <h1 style="margin:0 0 20px;font-size:20px;line-height:1.3">${name} just applied</h1>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">

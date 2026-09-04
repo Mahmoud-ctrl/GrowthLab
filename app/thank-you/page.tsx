@@ -32,8 +32,8 @@ export default function ThankYouPage() {
           </p>
           <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-ink-2">
             We&apos;ve emailed you the full program details and the free Digital
-            Marketing Strategy Guide check your inbox, (and your spam
-            folder) shortly. You can also download the program PDF right here.
+            Marketing Strategy Guide. Check your inbox (and your spam folder)
+            shortly. You can also download the program PDF right here.
           </p>
 
           <div className="mt-8">
