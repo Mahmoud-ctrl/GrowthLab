@@ -57,16 +57,13 @@ export function Curriculum() {
             </ScrollReveal>
 
             <Reveal className="mt-10 sm:mt-12" delay={0.1}>
-              <dl className="border-y border-ink/15">
+              <dl className="grid grid-cols-3 divide-x divide-ink/15 border-y border-ink/15">
                 {STATS.map((s) => (
-                  <div
-                    key={s.label}
-                    className="border-b border-ink/15 py-8 last:border-b-0 sm:py-10"
-                  >
-                    <dd className="font-display text-6xl font-black leading-none tabular-nums text-orange sm:text-7xl">
+                  <div key={s.label} className="px-4 py-8 first:pl-0 last:pr-0 sm:py-10">
+                    <dd className="font-display text-4xl font-black leading-none tabular-nums text-orange sm:text-7xl">
                       <CountUp to={s.n} />
                     </dd>
-                    <dt className="mt-3 font-display text-lg font-bold tracking-[-0.01em] text-ink sm:text-xl">
+                    <dt className="mt-3 font-display text-base font-bold tracking-[-0.01em] text-ink sm:text-xl">
                       {s.label}
                     </dt>
                     <p className="kicker mt-4 text-ink-3">{s.caption}</p>
