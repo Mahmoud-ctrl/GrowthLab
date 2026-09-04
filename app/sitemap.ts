@@ -8,7 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
-      images: [`${SITE_URL}/opengraph-image`],
+      images: [`${SITE_URL}/opengraph-image.jpg`],
     },
   ];
 }

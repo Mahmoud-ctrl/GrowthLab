@@ -2,17 +2,27 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { NextResponse } from "next/server";
 import { PROGRAM } from "@/components/site/data";
-import { abs } from "@/lib/site";
 
 // fs access + base64 → needs the Node runtime, not Edge.
 export const runtime = "nodejs";
 
 const BREVO_API = "https://api.brevo.com/v3";
-// The free lead magnet — the only PDF the email delivers. The full cohort
-// program PDF is download-only from the /thank-you page, never emailed.
-const PDF_SLUG = "growthlab-digital-marketing-guide.pdf";
-const PDF_PATH = join(process.cwd(), "public", PDF_SLUG);
-const PDF_FILENAME = "GrowthLab Digital Marketing Strategy Guide.pdf";
+
+// The welcome email attaches both PDFs. Keep these slugs in sync with
+// next.config.ts `outputFileTracingIncludes` so they ship in the serverless bundle.
+const GUIDE_SLUG = "growthlab-digital-marketing-guide.pdf";
+const PROGRAM_SLUG = "growthlab-cohort-program.pdf";
+
+const ATTACHMENTS = [
+  {
+    path: join(process.cwd(), "public", PROGRAM_SLUG),
+    name: "GrowthLab Program Details.pdf",
+  },
+  {
+    path: join(process.cwd(), "public", GUIDE_SLUG),
+    name: "GrowthLab Digital Marketing Strategy Guide.pdf",
+  },
+];
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -62,6 +72,8 @@ export async function POST(request: Request) {
   const listId = Number(process.env.BREVO_LIST_ID);
   const senderEmail = process.env.BREVO_SENDER_EMAIL || PROGRAM.email;
   const senderName = process.env.BREVO_SENDER_NAME || PROGRAM.name;
+  // Internal "new applicant" notification — override with LEAD_NOTIFY_EMAIL.
+  const notifyEmail = process.env.LEAD_NOTIFY_EMAIL || PROGRAM.email;
 
   const headers = {
     "api-key": apiKey,
@@ -96,14 +108,20 @@ export async function POST(request: Request) {
       // don't abort — still try to send the PDF
     }
 
-    // 2 — send the welcome email with the PDF attached
-    let attachment: { content: string; name: string }[] | undefined;
-    try {
-      const pdf = await readFile(PDF_PATH);
-      attachment = [{ content: pdf.toString("base64"), name: PDF_FILENAME }];
-    } catch (err) {
-      console.error("[lead] could not read the guide PDF", err);
-    }
+    // 2 — send the welcome email with both PDFs attached
+    const attachment = (
+      await Promise.all(
+        ATTACHMENTS.map(async ({ path, name }) => {
+          try {
+            const pdf = await readFile(path);
+            return { content: pdf.toString("base64"), name };
+          } catch (err) {
+            console.error("[lead] could not read attachment", name, err);
+            return null;
+          }
+        }),
+      )
+    ).filter((a): a is { content: string; name: string } => a !== null);
 
     const emailRes = await fetch(`${BREVO_API}/smtp/email`, {
       method: "POST",
@@ -112,9 +130,9 @@ export async function POST(request: Request) {
         sender: { name: senderName, email: senderEmail },
         to: [{ email, name }],
         replyTo: { email: senderEmail, name: senderName },
-        subject: "Your free GrowthLab Digital Marketing Strategy Guide",
+        subject: "Welcome to GrowthLab — your program details & guide inside",
         htmlContent: welcomeEmailHtml(firstName),
-        attachment,
+        attachment: attachment.length ? attachment : undefined,
         tags: ["lead-magnet"],
       }),
     });
@@ -130,6 +148,33 @@ export async function POST(request: Request) {
       );
     }
 
+    // 3 — notify the team. Best-effort: a failure here must not fail the request,
+    // the applicant is already captured in the list and has their welcome email.
+    try {
+      const notifyRes = await fetch(`${BREVO_API}/smtp/email`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          sender: { name: senderName, email: senderEmail },
+          to: [{ email: notifyEmail }],
+          // reply goes straight to the applicant
+          replyTo: { email, name },
+          subject: `New GrowthLab application — ${name}`,
+          htmlContent: leadNotificationHtml({ name, email, phone }),
+          tags: ["lead-notification"],
+        }),
+      });
+      if (!notifyRes.ok) {
+        console.error(
+          "[lead] team notification failed",
+          notifyRes.status,
+          await notifyRes.text(),
+        );
+      }
+    } catch (err) {
+      console.error("[lead] team notification error", err);
+    }
+
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[lead] unexpected error", err);
@@ -139,7 +184,7 @@ export async function POST(request: Request) {
 
 function welcomeEmailHtml(firstName: string) {
   const hi = firstName ? `Hi ${firstName},` : "Hi,";
-  const pdfUrl = process.env.PROGRAM_PDF_URL || abs(`/${PDF_SLUG}`);
+  const waUrl = `https://wa.me/${PROGRAM.whatsappNumber}`;
 
   return `<!doctype html>
 <html>
@@ -150,40 +195,130 @@ function welcomeEmailHtml(firstName: string) {
           <table role="presentation" width="520" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:14px;padding:36px">
             <tr><td>
               <p style="margin:0 0 8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#d8451c">GrowthLab</p>
-              <h1 style="margin:0 0 18px;font-size:22px;line-height:1.25">Thank you for your interest in GrowthLab.</h1>
+              <h1 style="margin:0 0 18px;font-size:22px;line-height:1.25">Welcome to GrowthLab</h1>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6">${hi}</p>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
-                Thank you for filling out the form and taking the first step toward
-                joining GrowthLab. Your free <strong>Digital Marketing Strategy Guide</strong>
-                is attached to this email as a PDF.
+                Thank you for filling out the form and showing interest in <strong>GrowthLab</strong>.
               </p>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
-                It walks through the key elements behind an effective digital marketing
-                strategy &mdash; market research, audience definition, objectives, channel
-                selection, campaign planning and performance measurement &mdash; in a
-                practical, easy-to-follow format.
+                We&rsquo;re excited that you&rsquo;re taking the first step toward gaining
+                real-world digital marketing experience.
               </p>
-              <p style="margin:0 0 24px">
-                <a href="${pdfUrl}"
-                   style="display:inline-block;background:#16171d;color:#f2eee2;text-decoration:none;font-weight:600;font-size:14px;padding:12px 22px;border-radius:999px">
-                  Download your guide
-                </a>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
+                Attached to this email, you&rsquo;ll find:
               </p>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px">
+                <tr><td style="padding:14px 16px;background:#f7f5ec;border-left:3px solid #d8451c;border-radius:8px">
+                  <p style="margin:0 0 4px;font-size:15px;line-height:1.4;font-weight:700">&#128196; GrowthLab Program Details</p>
+                  <p style="margin:0;font-size:14px;line-height:1.6;color:#4b4c55">
+                    Everything you need to know about the 8-week program, including the
+                    learning experience, real client projects, training sessions, and
+                    what you&rsquo;ll gain from the program.
+                  </p>
+                </td></tr>
+                <tr><td style="height:10px;line-height:10px;font-size:0">&nbsp;</td></tr>
+                <tr><td style="padding:14px 16px;background:#f7f5ec;border-left:3px solid #d8451c;border-radius:8px">
+                  <p style="margin:0 0 4px;font-size:15px;line-height:1.4;font-weight:700">&#128216; Free Digital Marketing Strategy Guide</p>
+                  <p style="margin:0;font-size:14px;line-height:1.6;color:#4b4c55">
+                    A practical guide covering the key elements of an effective digital
+                    marketing strategy, from market research and audience definition to
+                    objectives, channel selection, campaign planning, and performance
+                    measurement.
+                  </p>
+                </td></tr>
+              </table>
+
               <h2 style="margin:0 0 8px;font-size:15px;line-height:1.3;text-transform:uppercase;letter-spacing:0.02em">What happens next?</h2>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
                 Someone from the GrowthLab team will get in touch with you soon to
-                answer any questions and help finalize your registration for the program.
+                answer any questions and help you finalize your registration for the program.
               </p>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
-                If you have any questions in the meantime, just reply to this email
-                or message us on WhatsApp. We look forward to having you with us.
+                In the meantime, take a look through the attached documents and get a
+                feel for what the GrowthLab experience is all about.
+              </p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
+                If you have any questions, simply reply to this email or
+                <a href="${waUrl}" style="color:#d8451c;font-weight:600;text-decoration:none">message us on WhatsApp</a>.
+              </p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6">
+                We look forward to having you with us!
               </p>
               <p style="margin:24px 0 0;font-size:14px;line-height:1.6;color:#4b4c55">
-                The GrowthLab team
+                GrowthLab Team
               </p>
             </td></tr>
           </table>
           <p style="margin:20px 0 0;font-size:12px;color:#8a8b93">© ${new Date().getFullYear()} GrowthLab</p>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
+}
+
+const escapeHtml = (s: string) =>
+  s.replace(
+    /[&<>"']/g,
+    (c) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      })[c]!,
+  );
+
+function leadNotificationHtml(lead: {
+  name: string;
+  email: string;
+  phone: string;
+}) {
+  const name = escapeHtml(lead.name);
+  const email = escapeHtml(lead.email);
+  const phone = escapeHtml(lead.phone);
+  const phoneDigits = lead.phone.replace(/\D/g, "");
+  const when = new Date().toLocaleString("en-GB", {
+    timeZone: "Asia/Beirut",
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+
+  const row = (label: string, value: string) => `
+    <tr>
+      <td style="padding:6px 0;font-size:13px;color:#8a8b93;width:90px;vertical-align:top">${label}</td>
+      <td style="padding:6px 0;font-size:15px;color:#16171d">${value}</td>
+    </tr>`;
+
+  return `<!doctype html>
+<html>
+  <body style="margin:0;background:#f2eee2;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#16171d">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f2eee2">
+      <tr>
+        <td align="center" style="padding:40px 20px">
+          <table role="presentation" width="520" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:14px;padding:32px">
+            <tr><td>
+              <p style="margin:0 0 8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#d8451c">GrowthLab · New application</p>
+              <h1 style="margin:0 0 20px;font-size:20px;line-height:1.3">${name} just applied</h1>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                ${row("Name", name)}
+                ${row("Email", `<a href="mailto:${email}" style="color:#d8451c;text-decoration:none">${email}</a>`)}
+                ${row(
+                  "Phone",
+                  phoneDigits
+                    ? `<a href="tel:${phoneDigits}" style="color:#d8451c;text-decoration:none">${phone}</a> &nbsp;·&nbsp; <a href="https://wa.me/${phoneDigits}" style="color:#d8451c;text-decoration:none">WhatsApp</a>`
+                    : phone || "&mdash;",
+                )}
+                ${row("Submitted", when + " (Beirut)")}
+              </table>
+              <p style="margin:22px 0 0;font-size:13px;line-height:1.6;color:#8a8b93">
+                They&rsquo;ve been added to the Brevo list and sent the welcome email
+                with both PDFs. Reply to this email to reach them directly.
+              </p>
+            </td></tr>
+          </table>
         </td>
       </tr>
     </table>

@@ -5,7 +5,7 @@ import { ViewTracker } from "./view-tracker";
 import { PROGRAM } from "./data";
 
 const DETAILS: [string, string][] = [
-  ["Cohort", `14 · ${PROGRAM.dates}`],
+  ["Cohort", `14 ${PROGRAM.dates}`],
   ["Schedule", "Mon & Wed · 6–8 PM"],
   ["Format", PROGRAM.format],
   ["Contact", PROGRAM.contactPhone],

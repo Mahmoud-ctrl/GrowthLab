@@ -10,7 +10,7 @@ export const PROGRAM = {
   trainings: 16,
   price: 300,
   schedule: "Mondays & Wednesdays · 6:00–8:00 PM",
-  contactPhone: "03 412 557",
+  contactPhone: "+961 03 412 557",
   /** International format, digits only — used for the wa.me link. TODO: confirm the doctor's number. */
   whatsappNumber: "9613412557",
   whatsappMessage: "Hi, I'd like to know more about the GrowthLab program.",
@@ -65,11 +65,11 @@ export const PIPELINE: { title: string; body: string }[] = [
   },
   {
     title: "Content",
-    body: "Turn your strategy into execution by creating the copy, creatives, and landing pages for your client’s campaign",
+    body: "Turn your strategy into execution by creating the copy, creatives, and landing pages for your client’s campaign.",
   },
   {
     title: "Campaigns",
-    body: "Put your strategy into action by launching real campaigns on Google and Meta with real budgets and measurable targets",
+    body: "Put your strategy into action by launching real campaigns on Google and Meta with real budgets and measurable targets.",
   },
   {
     title: "Analytics",
@@ -362,7 +362,7 @@ export const THE_EXPERIENCE = [
 /** §11 — quick program info. */
 export const PROGRAM_INFO: [string, string][] = [
   ["Duration", "8 weeks"],
-  ["Dates", "September – October 2026"],
+  ["Dates", "September – 6 November 2026"],
   ["Schedule", "Mondays & Wednesdays · 6–8 PM"],
   ["Format", "Online"],
   ["Online training", "32 hours"],

@@ -268,9 +268,10 @@ export function LeadForm() {
                         email us at {PROGRAM.email}.
                       </p>
                     ) : (
-                      <p className="text-center text-[12px] text-ink-3">
-                        Your free Digital Marketing Strategy Guide, straight to
-                        your inbox.
+                      <p className="text-center text-[12px] text-orange text-bold" style={{ fontWeight: "bold" }}>
+                        When you fill out the form you will get the 
+                        program details, in addition to your free Digital 
+                        Marketing Strategy Guide, straight to your inbox.
                       </p>
                     )}
                   </motion.form>

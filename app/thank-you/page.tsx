@@ -31,9 +31,9 @@ export default function ThankYouPage() {
             joining GrowthLab.
           </p>
           <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-ink-2">
-            You can download the full cohort program PDF now. Your free Digital
-            Marketing Strategy Guide is on its way to your inbox &mdash; check
-            your spam folder if you don&apos;t see it shortly.
+            We&apos;ve emailed you the full program details and the free Digital
+            Marketing Strategy Guide check your inbox, (and your spam
+            folder) shortly. You can also download the program PDF right here.
           </p>
 
           <div className="mt-8">
