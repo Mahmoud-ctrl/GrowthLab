@@ -16,10 +16,10 @@ export const SITE_DESCRIPTION =
 
 export const SITE_NAME = PROGRAM.name;
 
-/** Cohort runs 14 September – 4 November 2026 (Mon & Wed sessions).
+/** Cohort runs 9 November – 30 December 2026 (Mon & Wed sessions).
  *  These ISO dates drive the Course rich result; keep them in sync with
  *  PROGRAM.dates and PROGRAM_INFO in components/site/data.ts. */
-export const COHORT_START = "2026-09-14";
-export const COHORT_END = "2026-11-04";
+export const COHORT_START = "2026-11-09";
+export const COHORT_END = "2026-12-30";
 
 export const SOCIAL_LINKS = [PROGRAM.instagramUrl, PROGRAM.tiktokUrl];
