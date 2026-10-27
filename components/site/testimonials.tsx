@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 const EASE_CSS = "cubic-bezier(0.16, 1, 0.3, 1)";
 const TURN_MS = 900;
 const AUTOPLAY_MS = 5000;
+const SWIPE_PX = 40;
 
 /*
  * The reviewer list sits on a wheel. Each review appears twice around it
@@ -64,6 +65,29 @@ export function Testimonials() {
   const [step, setStep] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
 
+  // swipe up → next review, swipe down → previous (touch, pen or mouse drag)
+  const swipe = React.useRef<{ y: number; moved: boolean } | null>(null);
+  const onPointerDown = (e: React.PointerEvent) => {
+    swipe.current = { y: e.clientY, moved: false };
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    const s = swipe.current;
+    if (!s) return;
+    const dy = e.clientY - s.y;
+    if (Math.abs(dy) > SWIPE_PX) {
+      s.moved = true;
+      setStep((n) => n + (dy < 0 ? 1 : -1));
+    }
+  };
+  // a swipe that ends on a name must not also count as a click on it
+  const onClickCapture = (e: React.MouseEvent) => {
+    if (swipe.current?.moved) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    swipe.current = null;
+  };
+
   const activeSlot = wrap(step, SLOTS);
   const activeIndex = wrap(step, TESTIMONIALS.length);
   const transition = reduce
@@ -114,7 +138,14 @@ export function Testimonials() {
             className="grid overflow-hidden rounded-3xl border border-ink/10 bg-paper shadow-[0_40px_80px_-48px_rgba(18,32,58,0.45)] md:grid-cols-12"
           >
             {/* left — reviewers on the arc */}
-            <div className="relative h-[320px] [contain:layout_paint] md:col-span-5 md:h-[400px]">
+            <div
+              onPointerDown={onPointerDown}
+              onPointerUp={onPointerUp}
+              onPointerCancel={() => (swipe.current = null)}
+              onClickCapture={onClickCapture}
+              // vertical drags here turn the wheel instead of scrolling the page
+              className="relative h-[320px] cursor-grab touch-pan-x select-none [contain:layout_paint] active:cursor-grabbing md:col-span-5 md:h-[400px]"
+            >
               {/* circle centre: the active avatar's centre sits RADIUS to its right */}
               <div
                 className="absolute top-1/2 left-10 sm:left-14"
