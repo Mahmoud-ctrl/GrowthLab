@@ -323,6 +323,12 @@ export const TRAINERS: Trainer[] = [
     linkedin: "mahmoudnasser",
     photo: "/trainers/mahmoud-nasser.webp",
   },
+  {
+    name: "Nai Daou",
+    role: "Social Media Manager",
+    linkedin: "naydaou",
+    photo: "/trainers/nai-daou.webp",
+  },
 ];
 
 export type Benefit = {
