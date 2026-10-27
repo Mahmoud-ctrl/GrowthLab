@@ -302,7 +302,7 @@ export const TRAINERS: Trainer[] = [
   {
     name: "Jessy Tannous",
     role: "Digital & Social Media Consultant",
-    linkedin: "jessy-tannous",
+    linkedin: "jessy-tannous-12687a222",
     photo: "/trainers/jessy-tannous.webp",
   },
   {
