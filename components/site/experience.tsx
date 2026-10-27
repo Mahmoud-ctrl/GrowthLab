@@ -10,7 +10,7 @@ export function Experience() {
   return (
     <section className="border-t border-ink bg-ink py-24 text-paper sm:py-32">
       <Container>
-        <Kicker className="text-paper/45">07 / The experience</Kicker>
+        <Kicker className="text-paper/45">09 / The experience</Kicker>
 
         <RevealText
           as="h2"

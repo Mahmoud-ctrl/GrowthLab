@@ -102,7 +102,7 @@ export function LeadForm() {
         <div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* left — the offer */}
           <div className="text-center lg:text-left">
-            <Kicker className="text-paper/45">09 / Reserve your seat</Kicker>
+            <Kicker className="text-paper/45">11 / Reserve your seat</Kicker>
             <span className="mt-6 block kicker text-orange-ink [font-size:0.62rem]">
               Free when you register
             </span>

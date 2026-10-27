@@ -60,7 +60,7 @@ export function Benefits() {
       <Container>
         <div className="grid gap-x-8 gap-y-8 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <Kicker>05 / What you keep</Kicker>
+            <Kicker>06 / What you keep</Kicker>
           </div>
           <div className="lg:col-span-8">
             <Reveal>

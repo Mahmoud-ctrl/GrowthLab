@@ -271,6 +271,60 @@ export const CURRICULUM: Week[] = [
   },
 ];
 
+export type Trainer = {
+  name: string;
+  role?: string;
+  /** linkedin.com/in/<username> */
+  linkedin?: string;
+  photo: string;
+};
+
+/** The people teaching the sessions, in display order. */
+export const TRAINERS: Trainer[] = [
+  {
+    name: "Wadih Constantine",
+    role: "Founder | Digital Marketing Trainer & Consultant",
+    linkedin: "wadih-constantine",
+    photo: "/trainers/wadih-constantine.webp",
+  },
+  {
+    name: "Pamela Mikhael Daher",
+    role: "Entrepreneur & Business Strategist",
+    linkedin: "pmik",
+    photo: "/trainers/pamela-daher.webp",
+  },
+  {
+    name: "Nina Mehrez",
+    role: "Entrepreneur & Marketing Mentor",
+    linkedin: "ninamehrez",
+    photo: "/trainers/nina-mehrez.webp",
+  },
+  {
+    name: "Jessy Tannous",
+    role: "Digital & Social Media Consultant",
+    linkedin: "jessy-tannous",
+    photo: "/trainers/jessy-tannous.webp",
+  },
+  {
+    name: "Rabih Kastoun",
+    role: "E-Commerce / Web Solutions Expert",
+    linkedin: "rabih-kastoun",
+    photo: "/trainers/rabih-kastoun.webp",
+  },
+  {
+    name: "Ziad Halawani",
+    role: "Performance Marketing Specialist",
+    linkedin: "ziad-el-halwani-442b3b26",
+    photo: "/trainers/ziad-halawani.webp",
+  },
+  {
+    name: "Mahmoud Nasser",
+    role: "Google Marketing Expert",
+    linkedin: "mahmoudnasser",
+    photo: "/trainers/mahmoud-nasser.webp",
+  },
+];
+
 export type Benefit = {
   title: string;
   body: string;
@@ -312,6 +366,46 @@ export const BENEFITS: Benefit[] = [
     body: "Collaborate, meet deadlines, receive feedback, and present your work, just like you would in a real marketing team.",
     span: "lg",
     facets: ["Collaboration", "Deadlines", "Feedback", "Presentations"],
+  },
+];
+
+export type Testimonial = {
+  name: string;
+  rating: number;
+  quote: string;
+};
+
+/** Google reviews from participants, quoted verbatim. */
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    name: "Lamar Hamdan",
+    rating: 5,
+    quote:
+      "I have learned so many new things that I havent learned at university especially that we got to work with real businesses and apply everything we learn through assignments so its not just theory. The trainers made the biggest difference in this experience. They were always helpful and ready to guide us whenever we needed help.",
+  },
+  {
+    name: "Yara Fawaz",
+    rating: 5,
+    quote:
+      "In my opinion, this marketing program is a great opportunity because it allows us to apply what we learn instead of only studying theories like we do at university. Working with real clients gives us practical experience and helps us understand how marketing works in real life.",
+  },
+  {
+    name: "Lamis Sabra",
+    rating: 5,
+    quote:
+      "The course was an excellent and valuable experience. It was not only informative but also highly practical. Also, the instructors were so helpful and provided feedback, which helped us learn and improve.",
+  },
+  {
+    name: "Abeer Khalife",
+    rating: 5,
+    quote:
+      "What I loved most about GrowthLabme is working with real clients. I thought I knew a lot about digital marketing, but the course taught me so much more and showed me how to use what I learned to help real businesses. The instructors were also amazing, bringing so much knowledge and real experience to the course and helping us learn from their expertise.",
+  },
+  {
+    name: "Lore Diab",
+    rating: 4,
+    quote:
+      "I really needed a program like this to make me grow stronger in the field of social media. It is an all rounder, it includes everything a social media manager needs to know and what the job markets look for. Cant wait to share my work in my portfolio.",
   },
 ];
 

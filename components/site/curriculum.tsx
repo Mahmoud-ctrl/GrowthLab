@@ -40,7 +40,7 @@ export function Curriculum() {
       <Container>
         <div className="grid gap-x-8 gap-y-8 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <Kicker>04 / The 8 weeks</Kicker>
+            <Kicker>05 / The 8 weeks</Kicker>
           </div>
           <div className="lg:col-span-8">
             <Reveal>

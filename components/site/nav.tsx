@@ -10,7 +10,9 @@ import { trackEvent } from "@/lib/track";
 const LINKS = [
   { href: "#problem", label: "The Problem" },
   { href: "#what", label: "What It Is" },
+  { href: "#trainers", label: "Trainers" },
   { href: "#curriculum", label: "Curriculum" },
+  { href: "#testimonials", label: "Testimonials" },
   { href: "#pricing", label: "Pricing" },
 ];
 
@@ -51,7 +53,7 @@ export function SiteNav() {
 
   // close the mobile menu on Escape and when the viewport grows to desktop
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
+    const mq = window.matchMedia("(min-width: 1024px)");
     const onMq = () => mq.matches && setOpen(false);
     mq.addEventListener("change", onMq);
     return () => mq.removeEventListener("change", onMq);
@@ -78,7 +80,7 @@ export function SiteNav() {
           <motion.div
             aria-hidden
             onClick={() => setOpen(false)}
-            className="fixed inset-0 z-[-1] bg-[#12203A]/35 md:hidden"
+            className="fixed inset-0 z-[-1] bg-[#12203A]/35 lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -114,12 +116,12 @@ export function SiteNav() {
         </button>
 
         {/* Navigation Links — desktop */}
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-0.5 lg:flex">
           {LINKS.map((l) => (
             <button
               key={l.href}
               onClick={() => go(l.href.slice(1))}
-              className="rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#12203A]/70 transition-all hover:bg-[#12203A]/[0.05] hover:text-[#12203A]"
+              className="whitespace-nowrap rounded-full px-2.5 py-2.5 text-xs xl:px-3.5 font-semibold uppercase tracking-wider text-[#12203A]/70 transition-all hover:bg-[#12203A]/[0.05] hover:text-[#12203A]"
             >
               {l.label}
             </button>
@@ -141,14 +143,14 @@ export function SiteNav() {
             </span>
           </button>
 
-          {/* Menu toggle — mobile only */}
+          {/* Menu toggle — below lg, where six links no longer fit */}
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-nav"
-            className="grid size-11 shrink-0 place-items-center rounded-full text-[#12203A] transition hover:bg-[#12203A]/[0.06] md:hidden"
+            className="grid size-11 shrink-0 place-items-center rounded-full text-[#12203A] transition hover:bg-[#12203A]/[0.06] lg:hidden"
           >
             {open ? (
               <X className="size-5" strokeWidth={2.25} aria-hidden />
@@ -164,7 +166,7 @@ export function SiteNav() {
         {open && (
           <motion.nav
             id="mobile-nav"
-            className="mx-auto mt-2 max-w-md overflow-hidden rounded-3xl border border-white/60 bg-white/95 p-2 shadow-[0_16px_48px_-12px_rgba(18,32,58,0.28)] backdrop-blur-md md:hidden"
+            className="mx-auto mt-2 max-w-md overflow-hidden rounded-3xl border border-white/60 bg-white/95 p-2 shadow-[0_16px_48px_-12px_rgba(18,32,58,0.28)] backdrop-blur-md lg:hidden"
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
             animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}

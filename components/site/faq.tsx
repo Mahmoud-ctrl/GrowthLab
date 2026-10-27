@@ -17,7 +17,7 @@ export function Faq() {
       <Container>
         <div className="grid gap-x-8 gap-y-8 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <Kicker>06 / FAQ</Kicker>
+            <Kicker>08 / FAQ</Kicker>
           </div>
           <div className="lg:col-span-8">
             <Reveal>
