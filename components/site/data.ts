@@ -306,6 +306,12 @@ export const TRAINERS: Trainer[] = [
     photo: "/trainers/jessy-tannous.webp",
   },
   {
+    name: "Nai Daou",
+    role: "Social Media Manager",
+    linkedin: "naydaou",
+    photo: "/trainers/nai-daou.webp",
+  },
+  {
     name: "Rabih Kastoun",
     role: "E-Commerce / Web Solutions Expert",
     linkedin: "rabih-kastoun",
@@ -322,12 +328,6 @@ export const TRAINERS: Trainer[] = [
     role: "Google Marketing Expert",
     linkedin: "mahmoudnasser",
     photo: "/trainers/mahmoud-nasser.webp",
-  },
-  {
-    name: "Nai Daou",
-    role: "Social Media Manager",
-    linkedin: "naydaou",
-    photo: "/trainers/nai-daou.webp",
   },
 ];
 
@@ -412,6 +412,12 @@ export const TESTIMONIALS: Testimonial[] = [
     rating: 4,
     quote:
       "I really needed a program like this to make me grow stronger in the field of social media. It is an all rounder, it includes everything a social media manager needs to know and what the job markets look for. Cant wait to share my work in my portfolio.",
+  },
+  {
+    name: "Hala Saghir",
+    rating: 5,
+    quote:
+      "My experience with GrowthLab has been amazing! I learned so much by working on real projects and applying what we learned in every session. It gave me practical experience, helped me build my confidence, and made me feel more prepared for the real marketing world.",
   },
 ];
 
